@@ -3,9 +3,12 @@ package com.example.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.example.backend.model.Transaction;
 import com.example.backend.repository.TransactionRepository;
 
+@Service
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;

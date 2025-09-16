@@ -3,9 +3,12 @@ package com.example.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.example.backend.model.Item;
 import com.example.backend.repository.ItemRepository;
 
+@Service
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -23,6 +26,11 @@ public class ItemService {
     //Tìm dựa trên id
     public Optional<Item> findItembyId(int id) {
         return itemRepository.findById(id);
+    }
+
+    //Tạo
+    public Item createItem(Item item) {
+        return itemRepository.save(item);
     }
 
     //Nâng cấp

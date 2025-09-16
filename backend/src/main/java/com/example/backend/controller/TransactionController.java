@@ -26,7 +26,7 @@ public class TransactionController {
     }
 
     /*--------------------------------CRUD cơ bản -------------------------------- */
-    @GetMapping("/")
+    @GetMapping
     public List<Transaction> getAllTransaction() {
         return transactionService.getAllTransaction();
     }
@@ -36,7 +36,7 @@ public class TransactionController {
         return transactionService.findTransactionbyId(id);
     }
 
-    @PostMapping("/transaction")
+    @PostMapping
     public Transaction createtreansaction(@RequestBody Transaction transaction) {
         return transactionService.createTransaction(transaction);
     }

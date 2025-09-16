@@ -27,7 +27,7 @@ public class UserController {
     }
 
     /*---------------------------------CRUD cơ bản--------------------------------- */
-    @GetMapping("/")
+    @GetMapping
     public List<User> getAllUser() {
         return userService.getAllUser();
     }
@@ -37,12 +37,12 @@ public class UserController {
         return userService.findUserbyId(id);
     }
 
-    @PostMapping("/user")
+    @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    @PutMapping("user/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<User> updatedUser(@PathVariable int id, @RequestBody User user) {
         try {
             user.setId(id);

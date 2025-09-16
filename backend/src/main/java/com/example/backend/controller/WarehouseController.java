@@ -38,7 +38,7 @@ public class WarehouseController {
         return warehouseService.findWarehousebyId(id);
     }
 
-    @PostMapping("/warehouse")
+    @PostMapping
     public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {
         return warehouseService.createWarehouse(warehouse);
     }

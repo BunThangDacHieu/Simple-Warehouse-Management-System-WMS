@@ -3,6 +3,7 @@ package com.example.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +23,12 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    InventoryController(InventoryService inventoryService) {
+    public InventoryController(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
 
     //----------------------------------------CRUD cơ bản---------------------------------------//
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Inventory>> getAllInventories() {
         List<Inventory> inventories = inventoryService.getAllInventories();
         return ResponseEntity.ok(inventories);
@@ -35,21 +36,24 @@ public class InventoryController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Inventory> getInventorybyId(@PathVariable int id) {
-        return inventoryService.getInventoryById(id);
+    public ResponseEntity<Inventory> getInventorybyId(@PathVariable int id) {
+        Optional<Inventory> inventory = inventoryService.getInventoryById(id);
+        return inventory.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/inventory")
-    public Inventory createInventory(@RequestBody Inventory inventory) {
-        return inventoryService.createInventory(inventory);
+    @PostMapping
+    public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
+        Inventory createInventory = inventoryService.createInventory(inventory);
+        return new ResponseEntity<>(createInventory, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteInventory(@PathVariable int id) {
+    public ResponseEntity<Inventory> deleteInventory(@PathVariable int id) {
         inventoryService.deleteInventory(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/inventory/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Inventory> updateInventory(@PathVariable int id, @RequestBody Inventory updateInventory) {
         try {
             updateInventory.setId(id);

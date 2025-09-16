@@ -1,0 +1,24 @@
+.layout {
+  display: flex;
+  height: calc(100vh - 60px); // trừ chiều cao header
+}
+
+.sidebar {
+  width: 200px; // độ rộng sidebar
+  background-color: #f0f0f0;
+  padding: 1rem;
+}
+
+.sidebar.left {
+  border-right: 1px solid #ccc;
+}
+
+.sidebar.right {
+  border-left: 1px solid #ccc;
+}
+
+.content {
+  flex: 1; // chiếm phần còn lại
+  padding: 1rem;
+  overflow-y: auto;
+}
