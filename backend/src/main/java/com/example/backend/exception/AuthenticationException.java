@@ -1,15 +1,15 @@
 package com.example.backend.exception;
 
-public class BadRequestException extends RuntimeException {
+public class AuthenticationException extends RuntimeException {
 
     private final int statusCode;
 
-    public BadRequestException(String message, int statusCode) {
+    public AuthenticationException(String message, int statusCode) {
         super(message);
         this.statusCode = statusCode;
     }
 
-    public int getStatusCode() {
+    public int statusCode() {
         return statusCode;
     }
 }

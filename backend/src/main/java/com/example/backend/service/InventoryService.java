@@ -27,7 +27,7 @@ public class InventoryService {
     public List<Inventory> getAllInventories() {
         List<Inventory> inventory = inventoryRepository.findAll();
         if (inventory.isEmpty() || inventory == null) {
-            throw new NotFoundException("Inventory not found");
+            throw new NotFoundException("Inventory not found", 404);
         }
         return inventoryRepository.findAll();
 
@@ -42,7 +42,7 @@ public class InventoryService {
     //Tìm kiếm dựa trên ID
     public Optional<Inventory> getInventoryById(int id) {
         if (id <= 0) {
-            throw new BadRequestException("Inventory id must be greater than 0");
+            throw new BadRequestException("Inventory id must be greater than 0", 400);
         }
         return inventoryRepository.findById(id);
     }
@@ -50,7 +50,7 @@ public class InventoryService {
     //Cập nhật    
     public Inventory updateInventory(Inventory updateInventory) throws Exception {
         Inventory inventory = inventoryRepository.findById(updateInventory.getId())
-                .orElseThrow(() -> new NotFoundException("Inventory not found"));
+                .orElseThrow(() -> new NotFoundException("Inventory not found", 404));
         inventory.setQuantity(updateInventory.getQuantity());
         return inventoryRepository.save(inventory);
 

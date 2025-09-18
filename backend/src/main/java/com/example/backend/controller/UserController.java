@@ -54,9 +54,13 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
-        return;
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /*---------------------------------logic nghiệp vụ---------------------------- */

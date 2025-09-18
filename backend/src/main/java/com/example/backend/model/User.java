@@ -1,5 +1,12 @@
 package com.example.backend.model;
 
+import java.util.Collection;
+import java.util.Collections;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -25,7 +32,6 @@ public class User {
     private String name;
     @Email
     private String email;
-    @JsonIgnore
     private String password;
     @Enumerated(EnumType.STRING)
     private role role;
@@ -39,6 +45,7 @@ public class User {
     private String contract_person;
     @Pattern(regexp = "\\d{10}", message = "Phone must be 10 digits")
     private int phone;
+
     private String address;
     @OneToOne(mappedBy = "user")
     private Customer customer;
@@ -67,16 +74,16 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -130,5 +137,4 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
-
 }

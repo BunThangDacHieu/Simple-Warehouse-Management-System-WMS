@@ -3,18 +3,39 @@ package com.example.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getName())
+                .password(user.getPassword())
+                .roles(user.getRole().toString())
+                .build();
+
     }
 
     /*-------------------------------------CRUD cơ bản------------------------------------- */
@@ -47,5 +68,10 @@ public class UserService {
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
+
     /*-------------------------------------Logic nghiệp vụ------------------------------------- */
+    //Auth Service
+    public User findUserbyEmail(User user) {
+        return userRepository.findByEmail(user.getEmail());
+    }
 }
