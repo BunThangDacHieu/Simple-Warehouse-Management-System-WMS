@@ -52,4 +52,6 @@ public class WarehouseService {
         warehouseRepository.deleteById(id);
     }
     /*-------------------------------------Logic nghiệp vụ------------------------------------- */
+
+    //Số lượng mặt hàng trong một kho cụ thể, thông tin Inventory trong một Warehouse
 }

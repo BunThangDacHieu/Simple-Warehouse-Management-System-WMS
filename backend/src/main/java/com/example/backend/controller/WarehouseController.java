@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.Warehouse;
 import com.example.backend.service.WarehouseService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/warehouse")
@@ -28,13 +29,13 @@ public class WarehouseController {
     }
 
     /*-----------------------------------CRUD cơ bản----------------------------------- */
-    @GetMapping("/")
+    @GetMapping
     public List<Warehouse> getAllWarehouse() {
         return warehouseService.getAllWarehouse();
     }
 
     @GetMapping("/{id}")
-    public Optional<Warehouse> getWarehouseById(@RequestParam int id) {
+    public Optional<Warehouse> getWarehouseById(@PathVariable int id) {
         return warehouseService.findWarehousebyId(id);
     }
 
@@ -44,7 +45,7 @@ public class WarehouseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateWarehouse(@PathVariable int id, @RequestBody Warehouse warehouse) {
+    public ResponseEntity<Object> updateWarehouse(@PathVariable int id, @Valid @RequestBody Warehouse warehouse) {
         try {
             warehouse.setId(id);
             Warehouse updatedWarehouse = warehouseService.updateWarehouse(warehouse);

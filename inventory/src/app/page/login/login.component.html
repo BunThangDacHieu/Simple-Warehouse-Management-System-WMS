@@ -1,1 +1,73 @@
-<p>login works!</p>
+<p-toast></p-toast>
+
+<div class="login-container">
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="brand">LogisTech</div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="image">
+      <img
+        src="https://www.dropoff.com/wp-content/webp-express/webp-images/uploads/2022/05/What-Is-Manufacturing-Logistics-and-What-Does-It-Involve-01-1536x900.jpg.webp"
+        alt="Sample"
+      />
+    </div>
+
+    <div class="form">
+      <p-card class="shadow">
+        <h2 class="text-center">Đăng Nhập</h2>
+
+        <form>
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Nhập email"
+            />
+          </div>
+
+          <div class="p-field">
+            <label for="password">Mật khẩu</label>
+            <p-password
+              id="password"
+              formControlName="password"
+              placeholder="Nhập mật khẩu"
+            ></p-password>
+          </div>
+
+          <div class="options">
+            <p-checkbox
+              formControlName="rememberMe"
+              binary="true"
+              label="Nhớ mật khẩu"
+            ></p-checkbox>
+            <a href="/forgot-password">Quên mật khẩu?</a>
+          </div>
+
+          <button pButton type="submit" class="w-100 mt-3">Đăng Nhập</button>
+
+          <p class="small fw-bold mt-2 pt-1 mb-2 text-center">
+            Chưa có tài khoản?
+            <a href="/signup" class="link-danger">Đăng ký</a>
+          </p>
+        </form>
+      </p-card>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>LogisTech © 2024. Tất cả quyền được bảo lưu.</div>
+    <div class="social">
+      <a href="#"><i class="pi pi-facebook"></i></a>
+      <a href="#"><i class="pi pi-twitter"></i></a>
+      <a href="#"><i class="pi pi-google"></i></a>
+      <a href="#"><i class="pi pi-linkedin"></i></a>
+    </div>
+  </footer>
+</div>

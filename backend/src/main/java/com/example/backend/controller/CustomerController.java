@@ -3,7 +3,6 @@ package com.example.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.example.backend.model.Customer;
 import com.example.backend.service.CustomerService;
 
@@ -29,23 +29,36 @@ public class CustomerController {
 
     /*----------------------------------CRUD cơ bản ----------------------------------- */
     @GetMapping
-    public List<Customer> getAllCustomer() {
-        return customerService.getAllCustomer();
+    public ResponseEntity<Customer> getAllCustomer() {
+        List<Customer> customer = customerService.getAllCustomer();
+        return customer.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(customer.get(0));
     }
 
     @GetMapping("/{id}")
-    public Optional<Customer> findCustomerbyId(@RequestParam int id) {
-        return customerService.findCustomerbyId(id);
+    public ResponseEntity<Customer> findCustomerbyId(@RequestParam int id) {
+        Optional<Customer> customer = customerService.findCustomerbyId(id);
+        return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.createCustomer(customer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        try {
+            Customer createdCustomer = customerService.createCustomer(customer);
+            return ResponseEntity.ok(createdCustomer);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable int id) {
-        customerService.deleteCustomer(id);
+    public ResponseEntity<String> deleteCustomer(@PathVariable int id) {
+        try {
+            customerService.deleteCustomer(id);
+            return ResponseEntity.ok("Customer deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     @PutMapping("/{id}")

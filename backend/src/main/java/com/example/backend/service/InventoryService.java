@@ -2,19 +2,24 @@ package com.example.backend.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
-import com.example.backend.exception.*;
+import com.example.backend.exception.BadRequestException;
+import com.example.backend.exception.NotFoundException;
 import com.example.backend.model.Inventory;
 import com.example.backend.repository.InventoryRepository;
+import com.example.backend.repository.WarehouseRepository;
 
 @Service
 public class InventoryService {
 
     private final InventoryRepository inventoryRepository;
+    private final WarehouseRepository warehouseRepository;
 
-    public InventoryService(InventoryRepository inventoryRepository) {
+    public InventoryService(InventoryRepository inventoryRepository, WarehouseRepository warehouseRepository) {
         this.inventoryRepository = inventoryRepository;
+        this.warehouseRepository = warehouseRepository;
     }
 
     /*------------------------------------------CRUD cơ bản--------------------------------------- */
@@ -56,6 +61,11 @@ public class InventoryService {
         inventoryRepository.deleteById(id);
 
     }
+
     /*------------------------------------------Logic nghiệp vụ---------------------------------------*/
+    //Inventory dựa trên warehouse_id
+    public List<Inventory> getInventoryByWarehouseId(int warehouseId) {
+        return inventoryRepository.findByWarehouseId(warehouseId);
+    }
 
 }

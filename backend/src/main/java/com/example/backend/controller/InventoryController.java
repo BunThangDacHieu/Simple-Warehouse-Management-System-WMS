@@ -64,4 +64,11 @@ public class InventoryController {
         }
     }
     //----------------------------------------Logic nâng cao---------------------------------------//
+
+    @GetMapping("/warehouse/{id}")
+    public ResponseEntity<List<Inventory>> getInventoryByWarehouseId(@PathVariable int id) {
+        List<Inventory> inventories = inventoryService.getInventoryByWarehouseId(id);
+        return ResponseEntity.ok(inventories);
+    }
+
 }

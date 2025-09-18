@@ -1,1 +1,24 @@
-<p>inventory-list works!</p>
+<p-toast />
+<div style="display: flex; gap: 1rem">
+  <div style="flex: 1">
+    <h2>Inventory List</h2>
+    <p-table [value]="inventories" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Item</th>
+          <th>Warehouse</th>
+          <th>Quantity</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-inventory>
+        <tr>
+          <td>{{ inventory.id }}</td>
+          <td>{{ inventory.item.name }}</td>
+          <td>{{ inventory.warehouse.name }}</td>
+          <td>{{ inventory.quantity }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

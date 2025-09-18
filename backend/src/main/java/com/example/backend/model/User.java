@@ -10,6 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "User")
@@ -18,7 +21,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Size(min = 10, max = 20, message = "Name must greater than 10 characters and less than 20 characters")
     private String name;
+    @Email
     private String email;
     @JsonIgnore
     private String password;
@@ -30,8 +35,9 @@ public class User {
         MANAGER,
         CUSTOMER
     }
-
+    @Size(min = 5, max = 20, message = "Name of contract person must greater than 5 characters and less than 20 characters")
     private String contract_person;
+    @Pattern(regexp = "\\d{10}", message = "Phone must be 10 digits")
     private int phone;
     private String address;
     @OneToOne(mappedBy = "user")

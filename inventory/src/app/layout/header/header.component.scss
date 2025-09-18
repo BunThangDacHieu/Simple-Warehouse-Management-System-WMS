@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 0;
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  color: inherit;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.mainNav {
+  width: 100%;
+  height: 80px;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+  padding: 0 40px;
+
+  &__logo {
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-size: 18px;
+  }
+
+  &__links {
+    display: flex;
+  }
+
+  &__link {
+    letter-spacing: 1px;
+    font-size: 14px;
+    margin-left: 20px;
+    font-weight: 600;
+    box-shadow: inset 0px -10px 0px rgba(white, 0.5);
+    transition: all 0.4s ease, transform 0.2s ease;
+    padding: 2px 4px;
+    transform: translateY(0px);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: inset 0px -20px 0px white;
+    }
+  }
+
+  &__icon {
+    background-image: url(https://rafaelalucas91.github.io/assets/icons/black/icon-141.svg);
+    width: 32px;
+    height: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: none;
+  }
+}

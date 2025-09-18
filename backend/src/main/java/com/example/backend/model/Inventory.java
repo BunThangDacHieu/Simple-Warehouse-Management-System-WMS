@@ -18,7 +18,6 @@ import jakarta.persistence.Table;
 @Table(name = "inventory")
 public class Inventory {
 
-    //Số lượng mặt hàng trong một kho cụ thể
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

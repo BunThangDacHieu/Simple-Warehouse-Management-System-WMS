@@ -1,0 +1,63 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .navbar {
+    background: #f8f9fa;
+    padding: 1rem;
+    .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+
+    .image {
+      flex: 0.5;
+      img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .form {
+      flex: 1;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      p-card {
+        width: 100%;
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem 0;
+      }
+    }
+  }
+
+  .footer {
+    background: #007bff;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    .social a {
+      color: white;
+      margin: 0 0.5rem;
+      font-size: 1.2rem;
+    }
+  }
+}

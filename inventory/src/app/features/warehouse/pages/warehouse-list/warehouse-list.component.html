@@ -1,1 +1,201 @@
-<p>warehouse-list works!</p>
+<p-toast />
+<div style="display: flex; gap: 1rem">
+  <div style="flex: 1">
+    <h2>Warehouse List</h2>
+    <p-table [value]="warehouses" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Capacity</th>
+          <th style="text-align: center">Info</th>
+          <th style="width: 5rem">Update</th>
+          <th style="width: 5rem">Delete</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-warehouse>
+        <tr>
+          <td>
+            {{ warehouse.id }}
+          </td>
+          <td>
+            {{ warehouse.name }}
+          </td>
+          <td>{{ warehouse.location }}</td>
+          <td>{{ warehouse.capacity }}</td>
+          <td>
+            <p-button
+              label="Info"
+              severity="info"
+              (click)="viewDetail(warehouse.id)"
+            />
+          </td>
+          <td>
+            <p-button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text"
+              (click)="editWarehouse(warehouse)"
+            />
+            <p-dialog
+              header="Warehouse Form"
+              [modal]="true"
+              [(visible)]="visibleUpdate"
+              [style]="{ width: '25rem' }"
+            >
+              <form [formGroup]="warehouseForm">
+                <div class="field">
+                  <label for="name"
+                    >Name
+                    <span style="text-decoration-color: red">*</span></label
+                  >
+                  <input
+                    type="text"
+                    pInputText
+                    id="name"
+                    formControlName="name"
+                  />
+                  <div
+                    *ngIf="
+                      nameController['name'].invalid &&
+                      nameController['name'].touched
+                    "
+                  >
+                    <small *ngIf="nameController['name']?.hasError('required')">
+                      Name is required.
+                    </small>
+                    <small
+                      *ngIf="nameController['name']?.hasError('minlength')"
+                    >
+                      Name must be at least 5 characters long.
+                    </small>
+                    <small *ngIf="nameController['name']?.hasError('pattern')">
+                      Name must contain only letters.
+                    </small>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="location">Location</label>
+                  <input
+                    type="text"
+                    pInputText
+                    id="location"
+                    formControlName="location"
+                  />
+                  <div
+                    *ngIf="
+                      nameController['location'].invalid &&
+                      nameController['location'].touched
+                    "
+                  >
+                    <small
+                      *ngIf="nameController['location']?.hasError('required')"
+                    >
+                      Location is required.
+                    </small>
+                    <small
+                      *ngIf="nameController['location']?.hasError('minlength')"
+                    >
+                      Location must be at least 5 characters long.
+                    </small>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="capacity">Capacity</label>
+                  <input
+                    type="number"
+                    pInputText
+                    id="capacity"
+                    formControlName="capacity"
+                  />
+                  <div>
+                    <small *ngIf="nameController['capacity']?.hasError('min')">
+                      Capacity must be greater than 0.
+                    </small>
+                    <small *ngIf="nameController['capacity']?.hasError('max')">
+                      Capacity must be smaller than 1000.
+                    </small>
+                  </div>
+                </div>
+                <button
+                  pButton
+                  pRipple
+                  type="submit"
+                  label="Update"
+                  class="p-button-success"
+                  (click)="SaveandUpdateWarehouse()"
+                ></button>
+              </form>
+            </p-dialog>
+          </td>
+          <td>
+            <p-button
+              class="delete-button"
+              label="Delete"
+              severity="danger"
+              (click)="deleteWarehouse(warehouse.id)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div>
+      <p-button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-pencil"
+        class="p-button-rounded p-button-text"
+        (click)="showDialogCreate()"
+      />
+      <p-dialog
+        header="Warehouse Form Create"
+        [modal]="true"
+        [(visible)]="visibleCreate"
+        [style]="{ width: '25rem' }"
+      >
+        <form [formGroup]="warehouseForm">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" formControlName="name" />
+          </div>
+          <div class="field">
+            <label for="location">Location</label>
+            <input
+              type="text"
+              pInputText
+              id="location"
+              formControlName="location"
+            />
+          </div>
+          <div class="field">
+            <label for="capacity">Capacity</label>
+            <input
+              type="number"
+              pInputText
+              id="capacity"
+              formControlName="capacity"
+            />
+          </div>
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Create"
+            class="p-button-success"
+            (click)="SaveandCreateWarehouse()"
+          ></button>
+        </form>
+      </p-dialog>
+    </div>
+    <hr />
+  </div>
+  <div style="flex: 1; border-left: 1px solid #ddd; padding-left: 1rem">
+    <app-warehouse-detail
+      [warehouse]="selectedWarehouse"
+    ></app-warehouse-detail>
+  </div>
+</div>
