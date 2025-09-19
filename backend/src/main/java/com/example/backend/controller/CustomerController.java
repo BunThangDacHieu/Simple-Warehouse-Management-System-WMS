@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.Customer;
 import com.example.backend.service.CustomerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -35,13 +37,13 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findCustomerbyId(@RequestParam int id) {
+    public ResponseEntity<Customer> findCustomerbyId(@Valid @RequestParam int id) {
         Optional<Customer> customer = customerService.findCustomerbyId(id);
         return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
         try {
             Customer createdCustomer = customerService.createCustomer(customer);
             return ResponseEntity.ok(createdCustomer);
@@ -51,7 +53,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable int id) {
+    public ResponseEntity<String> deleteCustomer(@Valid @PathVariable int id) {
         try {
             customerService.deleteCustomer(id);
             return ResponseEntity.ok("Customer deleted successfully");
@@ -62,7 +64,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@Valid @PathVariable int id, @RequestBody Customer customer) {
         try {
             customer.setId(id);
             Customer updatedCustomer = customerService.updateCustomer(customer);

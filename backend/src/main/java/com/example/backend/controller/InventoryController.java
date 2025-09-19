@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.Inventory;
 import com.example.backend.service.InventoryService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/inventory")
 public class InventoryController {
@@ -36,25 +38,25 @@ public class InventoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Inventory> getInventorybyId(@PathVariable int id) {
+    public ResponseEntity<Inventory> getInventorybyId(@Valid @PathVariable int id) {
         Optional<Inventory> inventory = inventoryService.getInventoryById(id);
         return inventory.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Inventory> createInventory(@RequestBody Inventory inventory) {
+    public ResponseEntity<Inventory> createInventory(@Valid @RequestBody Inventory inventory) {
         Inventory createInventory = inventoryService.createInventory(inventory);
         return new ResponseEntity<>(createInventory, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Inventory> deleteInventory(@PathVariable int id) {
+    public ResponseEntity<Inventory> deleteInventory(@Valid @PathVariable int id) {
         inventoryService.deleteInventory(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable int id, @RequestBody Inventory updateInventory) {
+    public ResponseEntity<Inventory> updateInventory(@Valid @PathVariable int id, @RequestBody Inventory updateInventory) {
         try {
             updateInventory.setId(id);
             Inventory updated = inventoryService.updateInventory(updateInventory);
@@ -66,7 +68,7 @@ public class InventoryController {
     //----------------------------------------Logic nâng cao---------------------------------------//
 
     @GetMapping("/warehouse/{id}")
-    public ResponseEntity<List<Inventory>> getInventoryByWarehouseId(@PathVariable int id) {
+    public ResponseEntity<List<Inventory>> getInventoryByWarehouseId(@Valid @PathVariable int id) {
         List<Inventory> inventories = inventoryService.getInventoryByWarehouseId(id);
         return ResponseEntity.ok(inventories);
     }

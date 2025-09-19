@@ -19,7 +19,7 @@
       <p-card class="shadow">
         <h2 class="text-center">Đăng Nhập</h2>
 
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="p-field">
             <label for="email">Email</label>
             <input

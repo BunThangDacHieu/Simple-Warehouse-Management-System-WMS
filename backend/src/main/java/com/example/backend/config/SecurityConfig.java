@@ -3,9 +3,10 @@ package com.example.backend.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,14 +17,13 @@ import com.example.backend.service.UserService;
 import com.example.backend.util.JwtUtil;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfig {
+public class Securityconfig {
 
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public SecurityConfig(UserService userService, JwtUtil jwtUtil) {
+    public Securityconfig(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
@@ -33,9 +33,9 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/**").permitAll()
-                .requestMatchers("/api/manager/**").hasRole("MANAGER")
-                .requestMatchers("/api/supplier/**").hasRole("ADMIN")
-                .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
+                // .requestMatchers("/api/manager/**").hasRole("MANAGER")
+                // .requestMatchers("/api/supplier/**").hasRole("ADMIN")
+                // .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
                 .anyRequest().authenticated())
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(
@@ -57,7 +57,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManagerBuilder authenticationManagerBuilder(HttpSecurity http) throws Exception {
-        return (AuthenticationManagerBuilder) http.getSharedObject(AuthenticationManagerBuilder.class).build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }

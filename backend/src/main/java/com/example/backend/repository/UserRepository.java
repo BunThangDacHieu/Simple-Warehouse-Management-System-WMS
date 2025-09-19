@@ -6,7 +6,7 @@ import com.example.backend.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    User findByUsername(String name);
+    User findByName(String name);
 
     User findByEmail(String email);
 }

@@ -3,23 +3,27 @@ package com.example.backend.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.Supplier;
 import com.example.backend.service.SupplierService;
+import com.example.backend.util.ObjectValidator;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/supplier")
 public class SupplierController {
 
+    @Autowired
+    private ObjectValidator objectValidator;
     private final SupplierService supplierService;
 
     public SupplierController(SupplierService supplierService) {
@@ -28,18 +32,33 @@ public class SupplierController {
 
     /*-----------------------------------CRUD cơ bản ------------------------------------- */
     @GetMapping
-    public List<Supplier> getAllSupplier() {
-        return supplierService.getAllSupplier();
+    public ResponseEntity<List<Supplier>> getAllSupplier() {
+        try {
+            List<Supplier> suppliers = supplierService.getAllSupplier();
+            return ResponseEntity.ok(suppliers);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public Optional<Supplier> findSupplierbyId(@RequestParam int id) {
-        return supplierService.findSupplierbyId(id);
+    public ResponseEntity<Optional<Supplier>> findSupplierbyId(@Valid @RequestParam int id) {
+        try {
+            Optional<Supplier> suppliers = supplierService.findSupplierbyId(id);
+            return ResponseEntity.ok(suppliers);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSuppllier(@PathVariable int id) {
-        supplierService.deleteSuppllier(id);
+    public ResponseEntity<Object> deleteSuppllier(@Valid @PathVariable int id) {
+        try {
+            supplierService.deleteSuppllier(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         /*-----------------------------------Logic nâng cao ------------------------------------- */
     }

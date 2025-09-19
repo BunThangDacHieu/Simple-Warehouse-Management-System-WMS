@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.User;
 import com.example.backend.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -28,22 +30,37 @@ public class UserController {
 
     /*---------------------------------CRUD cơ bản--------------------------------- */
     @GetMapping
-    public List<User> getAllUser() {
-        return userService.getAllUser();
+    public ResponseEntity<List<User>> getAllUser() {
+        try {
+            List<User> users = userService.getAllUser();
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable int id) {
-        return userService.findUserbyId(id);
+    public ResponseEntity<Optional<User>> getUserById(@Valid @PathVariable int id) {
+        try {
+            Optional<User> users = userService.findUserbyId(id);
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+        try {
+            userService.saveUser(user);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updatedUser(@PathVariable int id, @RequestBody User user) {
+    public ResponseEntity<User> updatedUser(@Valid @PathVariable int id, @RequestBody User user) {
         try {
             user.setId(id);
             User updatedUser = userService.updateUser(user);
@@ -54,7 +71,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+    public ResponseEntity<String> deleteUser(@Valid @PathVariable int id) {
         try {
             userService.deleteUser(id);
             return ResponseEntity.ok("User deleted successfully");

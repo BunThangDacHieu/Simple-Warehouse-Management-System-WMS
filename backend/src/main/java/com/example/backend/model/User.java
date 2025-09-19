@@ -1,14 +1,5 @@
 package com.example.backend.model;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -17,21 +8,30 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "User")
+// @Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @Min(value = 1, message = "ID must be greater than 0")
     private int id;
+    @NotNull
     @Size(min = 10, max = 20, message = "Name must greater than 10 characters and less than 20 characters")
     private String name;
     @Email
+    @NotNull
     private String email;
+    @NotNull
+    @Pattern(regexp = ".*\\d.*", message = "must contain at least one numeric character")
     private String password;
     @Enumerated(EnumType.STRING)
     private role role;
@@ -43,7 +43,7 @@ public class User {
     }
     @Size(min = 5, max = 20, message = "Name of contract person must greater than 5 characters and less than 20 characters")
     private String contract_person;
-    @Pattern(regexp = "\\d{10}", message = "Phone must be 10 digits")
+    @Digits(integer = 10, fraction = 0, message = "Phone must be up to 10 digits")
     private int phone;
 
     private String address;

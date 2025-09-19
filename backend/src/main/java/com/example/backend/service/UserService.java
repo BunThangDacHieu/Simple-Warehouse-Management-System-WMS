@@ -3,6 +3,7 @@ package com.example.backend.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,18 +25,25 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
+    //Xây dựng user
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getName())
+                .withUsername(user.getEmail())
                 .password(user.getPassword())
-                .roles(user.getRole().toString())
+                .roles(user.getRole() != null ? user.getRole().name() : "CUSTOMER")
                 .build();
 
+    }
+
+    //Lưu người dùng với mật khẩu được mã hóa
+    public User saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     /*-------------------------------------CRUD cơ bản------------------------------------- */
@@ -47,10 +55,6 @@ public class UserService implements UserDetailsService {
     //Tìm dựa trên id
     public Optional<User> findUserbyId(int id) {
         return userRepository.findById(id);
-    }
-
-    public User createUser(User user) {
-        return userRepository.save(user);
     }
 
     //Cập nhật

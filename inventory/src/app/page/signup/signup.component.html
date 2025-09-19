@@ -19,7 +19,7 @@
       <p-card class="shadow">
         <h2 class="text-center">Đăng Ký</h2>
 
-        <form>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
           <div class="p-field">
             <label for="name">Tên</label>
             <input
@@ -51,7 +51,7 @@
             ></p-password>
           </div>
 
-          <div class="p-field">
+          <!-- <div class="p-field">
             <label for="confirmPassword">Xác nhận mật khẩu</label>
             <p-password
               id="confirmPassword"
@@ -68,7 +68,7 @@
               formControlName="role"
               placeholder="Chọn vai trò"
             ></p-dropdown>
-          </div>
+          </div> -->
 
           <!-- Conditional fields for Supplier -->
           <div>
@@ -84,12 +84,12 @@
             </div>
 
             <div class="p-field">
-              <label for="contactPhone">Số điện thoại liên hệ</label>
+              <label for="phone">Số điện thoại liên hệ</label>
               <input
-                id="contactPhone"
+                id="phone"
                 type="text"
                 pInputText
-                formControlName="contactPhone"
+                formControlName="phone"
                 placeholder="Nhập số điện thoại"
               />
             </div>

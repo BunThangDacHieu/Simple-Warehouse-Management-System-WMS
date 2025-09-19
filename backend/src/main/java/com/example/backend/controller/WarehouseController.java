@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,17 +32,28 @@ public class WarehouseController {
     /*-----------------------------------CRUD cơ bản----------------------------------- */
     @GetMapping
     public List<Warehouse> getAllWarehouse() {
-        return warehouseService.getAllWarehouse();
+        List<Warehouse> warehouses = warehouseService.getAllWarehouse();
+        return warehouses.isEmpty() ? Collections.emptyList() : warehouses;
     }
 
     @GetMapping("/{id}")
-    public Optional<Warehouse> getWarehouseById(@PathVariable int id) {
-        return warehouseService.findWarehousebyId(id);
+    public ResponseEntity<Optional<Warehouse>> getWarehouseById(@Valid @PathVariable int id) {
+        try {
+            Optional<Warehouse> warehouse = warehouseService.findWarehousebyId(id);
+            return ResponseEntity.ok(warehouse);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping
-    public Warehouse createWarehouse(@RequestBody Warehouse warehouse) {
-        return warehouseService.createWarehouse(warehouse);
+    public ResponseEntity<Warehouse> createWarehouse(@Valid @RequestBody Warehouse warehouse) {
+        try {
+            warehouseService.createWarehouse(warehouse);
+            return ResponseEntity.ok(warehouse);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("/{id}")
@@ -56,8 +68,13 @@ public class WarehouseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteWarehouse(@PathVariable int id) {
-        warehouseService.deleteWarehouse(id);
+    public ResponseEntity<String> deleteWarehouse(@Valid @PathVariable int id) {
+        try {
+            warehouseService.deleteWarehouse(id);
+            return ResponseEntity.ok("Delete successfully");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /*----------------------------------- Logic nghiệp vụ ------------------------------*/

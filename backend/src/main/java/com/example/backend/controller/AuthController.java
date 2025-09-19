@@ -1,5 +1,7 @@
 package com.example.backend.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +19,7 @@ import com.example.backend.service.UserService;
 import com.example.backend.util.JwtUtil;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
@@ -37,7 +39,7 @@ public class AuthController {
             if (userService.findUserbyEmail(user) != null) {
                 return ResponseEntity.badRequest().body("Email already exists");
             }
-            return ResponseEntity.ok(userService.createUser(user));
+            return ResponseEntity.ok(userService.saveUser(user));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -50,7 +52,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String jwt = jwtUtil.generateToken(userDetails);
-            return ResponseEntity.ok(jwt);
+            return ResponseEntity.ok(Map.of("token", jwt));
 
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
