@@ -33,9 +33,9 @@ public class Securityconfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/**").permitAll()
-                // .requestMatchers("/api/manager/**").hasRole("MANAGER")
-                // .requestMatchers("/api/supplier/**").hasRole("ADMIN")
-                // .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
+                .requestMatchers("/api/manager/**").hasRole("MANAGER")
+                .requestMatchers("/api/supplier/**").hasRole("ADMIN")
+                .requestMatchers("/api/customer/**").hasRole("CUSTOMER")
                 .anyRequest().authenticated())
                 .sessionManagement(
                         session -> session.sessionCreationPolicy(

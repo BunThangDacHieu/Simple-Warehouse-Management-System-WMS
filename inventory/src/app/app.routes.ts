@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { WarehouseListComponent } from './features/warehouse/pages/warehouse-list/warehouse-list.component';
+import { WarehouseListComponent } from './page/features/warehouse/pages/warehouse-list/warehouse-list.component';
 import { LoginComponent } from './page/login/login.component';
 import { SignupComponent } from './page/signup/signup.component';
 import { ForgotpasswordComponent } from './page/forgotpassword/forgotpassword.component';

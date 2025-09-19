@@ -3,7 +3,9 @@ package com.example.backend.util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -16,20 +18,15 @@ public class ObjectValidator {
     @Autowired
     LocalValidatorFactoryBean validator;
 
-    public <T> Map<String, String> getRequestAndSubmitErrors(T t) {
-        return getRequestAndSummitErrors(new HashMap<>(), t);
-    }
-
-    public <T> Map<String, String> getRequestAndSummitErrors(Map<String, String> errorResult, T t) {
-        errorResult.clear();
+    public <T> Map<String, String> getRequestAndSummitErrors(T t) {
         Set<ConstraintViolation<T>> violations = validator.getValidator().validate(t);
-        for (ConstraintViolation<T> violation : violations) {
-            if (violation.getMessage() != null && violation.getMessage().isBlank()) {
-                {
-                    errorResult.put(violation.getPropertyPath().toString(), violation.getMessage());
-                }
-            }
-        }
-        return errorResult;
+        return violations.stream()
+                .filter(violation -> StringUtils.isNoneEmpty(violation.getMessage()))
+                .collect(
+                        Collectors.toMap(violation -> violation.getPropertyPath().toString(),
+                                ConstraintViolation::getMessage,
+                                (existing, replacement) -> existing
+                        )
+                );
     }
 }

@@ -81,4 +81,7 @@ public class UserController {
     }
 
     /*---------------------------------logic nghiệp vụ---------------------------- */
+    //Manager Service
+    //Supplier Service
+    //Customer Service
 }

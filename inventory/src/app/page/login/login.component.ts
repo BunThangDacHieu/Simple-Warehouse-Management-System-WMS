@@ -51,7 +51,7 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },
       (error) => {
-        console.error('Login error: ', error);
+        console.error('Login error: ', error.error);
       }
     );
   }

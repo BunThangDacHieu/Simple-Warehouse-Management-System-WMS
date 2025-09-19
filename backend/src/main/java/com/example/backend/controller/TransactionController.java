@@ -32,7 +32,7 @@ public class TransactionController {
     @GetMapping
     public ResponseEntity<List<Transaction>> getAllTransaction() {
         try {
-            List<Transaction> transactions = transactionService.getAllTransaction();
+            List<Transaction> transactions = (List<Transaction>) transactionService.getAllTransaction();
             return ResponseEntity.ok(transactions);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -1,8 +1,10 @@
 package com.example.backend.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,11 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.util.ObjectValidator;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    @Autowired
+    private ObjectValidator objectValidator;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -29,9 +35,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
+        Map<String, String> error = objectValidator.getRequestAndSummitErrors(user);
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
@@ -54,6 +58,9 @@ public class UserService implements UserDetailsService {
 
     //Tìm dựa trên id
     public Optional<User> findUserbyId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("User id must be greater than 0");
+        }
         return userRepository.findById(id);
     }
 
@@ -70,6 +77,9 @@ public class UserService implements UserDetailsService {
 
     //Xóa
     public void deleteUser(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("User id must be greater than 0");
+        }
         userRepository.deleteById(id);
     }
 
