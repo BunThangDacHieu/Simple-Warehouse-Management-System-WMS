@@ -25,7 +25,7 @@ public class User {
     // @Min(value = 1, message = "ID must be greater than 0")
     private int id;
     @NotNull
-    @Size(min = 10, max = 20, message = "Name must greater than 10 characters and less than 20 characters")
+    @Size(min = 10, max = 20, message = "Name must greater than 10 characters and less than 20 characters abc")
     private String name;
     @Email
     @NotNull

@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
+import { WarehouseDetailCreateComponent } from '../../components/warehouse-detail-create/warehouse-detail-create.component';
+import { WarehouseDetailUpdateComponent } from '../../components/warehouse-detail-update/warehouse-detail-update.component';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -25,6 +28,8 @@ import { CommonModule } from '@angular/common';
     TableModule,
     WarehouseDetailComponent,
     ButtonModule,
+    WarehouseDetailCreateComponent,
+    WarehouseDetailUpdateComponent,
     ToastModule,
     Dialog,
     ReactiveFormsModule,
@@ -33,173 +38,129 @@ import { CommonModule } from '@angular/common';
   ],
   standalone: true,
   templateUrl: './warehouse-list.component.html',
-  styleUrl: './warehouse-list.component.scss',
+  styleUrls: ['./warehouse-list.component.scss'],
 })
 export class WarehouseListComponent implements OnInit {
   warehouses: Warehouse[] = [];
-  warehouse!: FormGroup;
+  warehouseForm: FormGroup;
 
   selectedWarehouse?: Warehouse;
-  visibleCreate = false;
-  visibleUpdate = false;
+  dialogVisible = false;
+  dialogInfoVisible = false;
+  dialogCreateVisible = false;
+  dialogUpdateVisible = false;
 
   constructor(
     private warehouseService: WarehouseService,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
-
-  UpdateSuccess() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Update Warehouse Success',
+    private messageService: MessageService,
+    private fb: FormBuilder
+  ) {
+    this.warehouseForm = this.fb.group({
+      id: [null],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      location: ['', Validators.required],
+      capacity: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
-  warehouseForm = new FormGroup({
-    id: new FormControl(),
-    name: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.pattern('[a-zA-Z]*'),
-    ]),
-    location: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.pattern('[a-zA-Z]*'),
-    ]),
-    capacity: new FormControl(0, [
-      Validators.required,
-      Validators.min(1),
-      Validators.max(5000),
-    ]),
-  });
-  get nameController() {
-    return this.warehouseForm.controls;
-  }
-  viewDetail(id: number) {
-    this.warehouseService.getWarehouseById(id).subscribe({
-      next: (data) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Get Warehouse ' + `${data.name}` + ' Success',
-        });
-      },
-      error: (err) => console.error('Error somewhere', err),
-    });
-  }
-  showDialogCreate() {
-    this.warehouseForm.reset({ name: '', location: '', capacity: 0 });
-    this.visibleCreate = true;
+  ngOnInit() {
+    this.getAllWarehouse();
   }
 
-  deleteWarehouse(id: number) {
-    this.warehouseService.deleteWarehouse(id).subscribe({
-      next: () => {
-        this.ngOnInit();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Delete Warehouse Success',
-        });
-      },
-      error: (err) => {
-        this.ngOnInit();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Delete Warehouse Failed',
-        });
-      },
-    });
-  }
   getAllWarehouse() {
     this.warehouseService.getAllWarehouse().subscribe({
       next: (data) => (this.warehouses = data),
-      error: (err) => console.error('Error somewhere', err),
+      error: (err) => console.error(err),
     });
   }
-  ngOnInit(): void {
-    this.getAllWarehouse();
+
+  showDialog() {
+    this.dialogVisible = true;
   }
-  editWarehouse(warehouse: Warehouse) {
+  // Hiển thị dialog
+  showDialogInfo(warehouse: Warehouse) {
+    this.selectedWarehouse = warehouse;
+    this.dialogInfoVisible = true;
+  }
+
+  showDialogCreate() {
+    this.dialogCreateVisible = true;
+  }
+
+  showDialogUpdate(warehouse: Warehouse) {
+    this.selectedWarehouse = warehouse;
     this.warehouseForm.patchValue(warehouse);
-    this.visibleUpdate = true;
+    this.dialogUpdateVisible = true;
   }
 
-  SaveandCreateWarehouse() {
-    if (this.warehouseForm.invalid) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Form Invalid',
-      });
-      return;
-    }
-    const data = this.warehouseForm.value;
+  onChangeDialogUpdate() {
+    this.dialogUpdateVisible = !this.dialogUpdateVisible;
+  }
 
-    const warehouseValue: Warehouse = {
-      id: data.id,
-      name: data.name ?? '',
-      location: data.location ?? '',
-      capacity: data.capacity ?? 0,
-    };
-    this.warehouseService.createWarehouse(warehouseValue).subscribe({
+  handleWarehouseCreated(newWarehouse: Warehouse): void {
+    if (this.warehouseForm.invalid) return;
+    this.warehouses.push(newWarehouse);
+    this.warehouseService.createWarehouse(newWarehouse).subscribe({
       next: () => {
-        this.ngOnInit(),
-          (this.visibleCreate = false),
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Create Warehouse Success',
-          });
+        this.getAllWarehouse();
+        this.dialogCreateVisible = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Warehouse Created',
+        });
       },
       error: () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Create Warehouse Failed',
+          detail: 'Create Failed',
         });
       },
     });
   }
-  SaveandUpdateWarehouse() {
-    if (this.warehouseForm.invalid) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Form Invalid',
-      });
-      return;
-    }
-    const data = this.warehouseForm.value;
-    const warehouseValue: Warehouse = {
-      id: data.id ?? null,
-      name: data.name ?? '',
-      location: data.location ?? '',
-      capacity: data.capacity ?? 0,
-    };
+
+  handleWarehouseUpdated(updateWarehouse: Warehouse) {
+    if (this.warehouseForm.invalid) return;
     this.warehouseService
-      .updateWarehouse(warehouseValue, warehouseValue.id)
+      .updateWarehouse(updateWarehouse, updateWarehouse.id)
       .subscribe({
         next: () => {
-          this.ngOnInit(),
-            (this.visibleUpdate = false),
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Update Warehouse Success',
-            });
+          this.getAllWarehouse();
+          this.dialogUpdateVisible = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Warehouse Updated',
+          });
         },
         error: () => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Update Warehouse Failed',
+            detail: 'Update Failed',
           });
         },
       });
+  }
+
+  deleteWarehouse(id: number) {
+    this.warehouseService.deleteWarehouse(id).subscribe({
+      next: () => {
+        this.getAllWarehouse();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Warehouse Deleted',
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Delete Failed',
+        });
+      },
+    });
   }
 }

@@ -12,9 +12,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
+import { TokenResponse } from '../../../shared/interface/tokenResponse';
 import { PasswordModule } from 'primeng/password';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 @Component({
   selector: 'app-login',
   imports: [
@@ -45,14 +47,30 @@ export class LoginComponent {
     });
   }
   login() {
-    this.authService.login(this.loginForm.value).subscribe(
-      (response) => {
-        localStorage.setItem('token', response.toString());
-        this.router.navigate(['/home']);
-      },
-      (error) => {
-        console.error('Login error: ', error.error);
-      }
-    );
+    const val = this.loginForm.value;
+    if (val.email && val.password) {
+      this.authService.login(val.email, val.password).subscribe(
+        (response) => {
+          sessionStorage.setItem('accessToken', response.accessToken);
+          sessionStorage.setItem('refreshToken', response.refreshToken);
+          const decoded: any = jwtDecode(response.accessToken);
+          sessionStorage.setItem('roles', JSON.stringify(decoded.roles));
+          this.authService.setLoggedIn(true);
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          this.getLoginUrl();
+          console.error('Login error: ', error.error);
+        }
+      );
+    }
+  }
+
+  isUserLoggedIn() {
+    return true;
+  }
+
+  getLoginUrl() {
+    return '/login';
   }
 }

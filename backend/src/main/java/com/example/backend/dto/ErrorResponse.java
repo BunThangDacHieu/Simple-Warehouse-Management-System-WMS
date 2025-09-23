@@ -1,5 +1,7 @@
 package com.example.backend.dto;
 
+import java.util.Map;
+
 public class ErrorResponse {
 
     private String message;

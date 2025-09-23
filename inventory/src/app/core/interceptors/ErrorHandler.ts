@@ -20,6 +20,6 @@ export class ErrorHandler implements HttpInterceptor {
   }
   protected handlerError(error: HttpErrorResponse) {
     console.log(error.message);
-    return throwError('Something went wrong');
+    return throwError(() => error);
   }
 }

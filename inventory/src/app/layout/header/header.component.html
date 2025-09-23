@@ -1,10 +1,24 @@
 <nav class="mainNav">
-  <div class="mainNav__logo">Logo</div>
+  <div class="mainNav__logo">LogisTech</div>
   <div class="mainNav__links">
-    <a href="" class="mainNav__link">About</a>
-    <a href="" class="mainNav__link">Projects</a>
-    <a href="" class="mainNav__link">Team</a>
-    <a href="" class="mainNav__link">Contacts</a>
+    <a href="" class="mainNav__link" style="color: black">About</a>
+    <a href="" class="mainNav__link" style="color: black">Projects</a>
+    <a href="" class="mainNav__link" style="color: black">Team</a>
+    <a href="" class="mainNav__link" style="color: black">Contacts</a>
+    <a
+      href="/login"
+      class="mainNav__link"
+      style="color: black"
+      *ngIf="!isLoggedin"
+      >Login</a
+    ><a
+      href="#"
+      class="mainNav__link"
+      style="color: black"
+      *ngIf="isLoggedin"
+      (click)="logout()"
+      >Logout</a
+    >
   </div>
   <div class="mainNav__icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -1,24 +1,12 @@
-// .layout {
-//   display: flex;
-//   height: calc(100vh - 60px); // trừ chiều cao header
-// }
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 
-// .sidebar {
-//   width: 200px; // độ rộng sidebar
-//   background-color: #f0f0f0;
-//   padding: 1rem;
-// }
-
-// .sidebar.left {
-//   border-right: 1px solid #ccc;
-// }
-
-// .sidebar.right {
-//   border-left: 1px solid #ccc;
-// }
-
-// .content {
-//   flex: 1;
-//   padding: 1rem;
-//   overflow-y: auto;
-// }
+.content {
+  flex: 1;
+  margin-top: 60px; // chiều cao header, hoặc dùng padding
+  padding: 1rem;
+  overflow-y: auto; // nếu bảng dài thì scroll
+}

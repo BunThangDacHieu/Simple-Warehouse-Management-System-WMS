@@ -1,5 +1,13 @@
-<div *ngIf="warehouse">
-  <h3>{{ warehouse.name }}</h3>
-  <p><strong>Location:</strong> {{ warehouse.location }}</p>
-  <p><strong>Capacity:</strong> {{ warehouse.capacity }}</p>
-</div>
+<p-dialog
+  header="Warehouse Info"
+  [(visible)]="dialogInfoVisible"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+>
+  <div *ngIf="selectedWarehouse">
+    <p><strong>ID:</strong> {{ selectedWarehouse.id }}</p>
+    <p><strong>Name:</strong> {{ selectedWarehouse.name }}</p>
+    <p><strong>Location:</strong> {{ selectedWarehouse.location }}</p>
+    <p><strong>Capacity:</strong> {{ selectedWarehouse.capacity }}</p>
+  </div>
+</p-dialog>

@@ -12,8 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-signup',
   imports: [
@@ -35,7 +36,8 @@ export class SignupComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private messageService: MessageService
   ) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
@@ -52,7 +54,15 @@ export class SignupComponent {
         this.router.navigate(['/login']);
       },
       (error) => {
-        console.error('Register error: ', error.error);
+        console.log('Full error object:', error);
+        console.log('Error status:', error.status);
+        console.log('Error body:', error.error);
+
+        this.messageService.add({
+          severity: 'error',
+          summary: error.error?.message || 'Error',
+          detail: error.error?.name || 'Unknown error',
+        });
       }
     );
   }

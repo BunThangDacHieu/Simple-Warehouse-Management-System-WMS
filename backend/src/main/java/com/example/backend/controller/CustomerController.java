@@ -31,13 +31,13 @@ public class CustomerController {
 
     /*----------------------------------CRUD cơ bản ----------------------------------- */
     @GetMapping
-    public ResponseEntity<Customer> getAllCustomer() {
-        List<Customer> customer = customerService.getAllCustomer();
-        return customer.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(customer.get(0));
+    public ResponseEntity<List<Customer>> getAllCustomer() {
+        List<Customer> customers = customerService.getAllCustomer();
+        return customers.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(customers);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findCustomerbyId(@Valid @RequestParam int id) {
+    public ResponseEntity<Customer> findCustomerbyId(@Valid @PathVariable int id) {
         Optional<Customer> customer = customerService.findCustomerbyId(id);
         return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -74,4 +74,5 @@ public class CustomerController {
         }
     }
     /*----------------------------------Logic nâng cao ----------------------------------- */
+    //List Customer of a 
 }

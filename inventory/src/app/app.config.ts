@@ -9,13 +9,18 @@ import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
+  withInterceptors,
 } from '@angular/common/http';
 import { ErrorHandler } from './core/interceptors/ErrorHandler';
+import { apiKeyInterceptor } from './core/interceptors/api-key.interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(
+      withInterceptorsFromDi(),
+      withInterceptors([apiKeyInterceptor])
+    ),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandler,
