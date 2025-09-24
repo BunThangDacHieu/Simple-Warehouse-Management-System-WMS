@@ -29,7 +29,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './warehouse-detail-create.component.scss',
 })
 export class WarehouseDetailCreateComponent {
-  @Input() selectedWarehouse?: Warehouse;
   @Input() dialogVisible: boolean = false;
 
   @Output() dialogCreateVisibleChange = new EventEmitter<boolean>();

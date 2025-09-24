@@ -1,7 +1,6 @@
 <div class="mb-4 p-8 flex items-center justify-center">
-  <p-card
+  <p-card *ngFor="let item of items"
     [style]="{ width: '25rem', overflow: 'hidden' }"
-    *ngFor="let item of items"
   >
     <ng-template #header>
       {{ item.name }}

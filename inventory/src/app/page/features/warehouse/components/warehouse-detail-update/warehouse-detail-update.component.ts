@@ -29,13 +29,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './warehouse-detail-update.component.scss',
 })
 export class WarehouseDetailUpdateComponent {
-  @Input() selectedWarehouse?: Warehouse;
+  @Input() warehouse?: Warehouse;
   @Input() dialogUpdateVisible: boolean = false;
 
   //Output ra đóng và mở dialog cho phía component cha ở đây là Warehouse List
   @Output() dialogUpdateVisibleChange = new EventEmitter<boolean>();
   //Output ra lập dữ liệu cho phía component con trả về cho phía componnet cha ở đây là Warehouse List
   @Output() warehouseUpdated = new EventEmitter<any>();
+  //Output ra dữ liệu của nhà kho- warehouse cần được xác định để update Warehouse cho component con
 
   warehouseForm!: FormGroup;
 
@@ -47,30 +48,29 @@ export class WarehouseDetailUpdateComponent {
 
   inForm(): void {
     this.warehouseForm = this.fb.group({
-      name: [this.selectedWarehouse?.name, Validators.required],
-      location: [this.selectedWarehouse?.location, Validators.required],
-      capacity: [this.selectedWarehouse?.capacity, Validators.required],
+      name: [this.warehouse?.name, Validators.required],
+      location: [this.warehouse?.location, Validators.required],
+      capacity: [this.warehouse?.capacity, Validators.required],
     });
   }
 
   ngOnChanges(): void {
-    if (this.selectedWarehouse && this.warehouseForm) {
+    if (this.warehouse && this.warehouseForm) {
       this.warehouseForm.patchValue({
-        name: this.selectedWarehouse.name,
-        location: this.selectedWarehouse.location,
-        capacity: this.selectedWarehouse.capacity,
+        name: this.warehouse.name,
+        location: this.warehouse.location,
+        capacity: this.warehouse.capacity,
       });
     }
   }
 
   handleWarehouseUpdated(): void {
-    if (this.warehouseForm.valid && this.selectedWarehouse) {
+    if (this.warehouseForm.valid && this.warehouse) {
       this.warehouseUpdated.emit({
-        id: this.selectedWarehouse?.id,
+        id: this.warehouse?.id,
         ...this.warehouseForm.value,
       });
 
-      // Đóng dialog sau khi lưu
       this.dialogUpdateVisible = false;
       this.dialogUpdateVisibleChange.emit(this.dialogUpdateVisible);
 

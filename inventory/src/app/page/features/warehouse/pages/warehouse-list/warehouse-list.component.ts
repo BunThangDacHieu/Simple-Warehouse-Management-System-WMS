@@ -21,6 +21,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import {UserListComponent} from '../../../user/component/user-list/user-list.component';
 
 @Component({
   selector: 'app-warehouse-list',
@@ -35,6 +36,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     InputTextModule,
     CommonModule,
+    UserListComponent
   ],
   standalone: true,
   templateUrl: './warehouse-list.component.html',

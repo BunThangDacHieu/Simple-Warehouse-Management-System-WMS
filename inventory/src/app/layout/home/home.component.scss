@@ -1,0 +1,18 @@
+.main-content {
+  display: flex;
+  justify-content: space-between; /* Đẩy hai cột về hai phía */
+  gap: 2rem; /* Thêm khoảng cách giữa các cột */
+}
+
+.left-section {
+  flex: 0 0 50%; /* Cho phép cột này mở rộng để chiếm không gian */
+  /* Các style khác cho cột bên trái */
+}
+
+.right-section {
+
+  flex: 0 0 50%; /* Chiếm 50% không gian, không co giãn */
+  /* Hoặc một giá trị cố định nếu bạn muốn: flex: 0 0 700px; */
+}
+
+

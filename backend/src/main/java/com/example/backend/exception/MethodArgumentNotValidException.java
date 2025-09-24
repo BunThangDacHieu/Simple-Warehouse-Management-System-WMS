@@ -1,0 +1,14 @@
+package com.example.backend.exception;
+
+public class MethodArgumentNotValidException extends RuntimeException {
+    private final int statusCode;
+
+    public MethodArgumentNotValidException(String message, int statusCode) {
+        super(message);
+        this.statusCode = statusCode;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+}

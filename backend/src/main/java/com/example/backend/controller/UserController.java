@@ -49,15 +49,6 @@ public class UserController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        try {
-            userService.saveUser(user);
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updatedUser(@Valid @PathVariable int id, @RequestBody User user) {

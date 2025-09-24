@@ -3,11 +3,8 @@
 <div class="register-container">
   <!-- Content -->
   <div class="content">
-    <div class="image">
-      <img
-        src="https://www.dropoff.com/wp-content/webp-express/webp-images/uploads/2022/05/What-Is-Manufacturing-Logistics-and-What-Does-It-Involve-01-1536x900.jpg.webp"
-        alt="Sample"
-      />
+    <div class="image-side">
+      <app-image-login-signup></app-image-login-signup>
     </div>
 
     <div class="form">
@@ -15,6 +12,7 @@
         <h2 class="text-center">Đăng Ký</h2>
 
         <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <!-- Tên -->
           <div class="p-field">
             <label for="name">Tên</label>
             <input
@@ -26,6 +24,7 @@
             />
           </div>
 
+          <!-- Email -->
           <div class="p-field">
             <label for="email">Email</label>
             <input
@@ -37,36 +36,32 @@
             />
           </div>
 
+          <!-- Mật khẩu -->
           <div class="p-field">
             <label for="password">Mật khẩu</label>
             <p-password
               id="password"
               formControlName="password"
               placeholder="Nhập mật khẩu"
+              [feedback]="false"
             ></p-password>
           </div>
 
-          <!-- <div class="p-field">
-            <label for="confirmPassword">Xác nhận mật khẩu</label>
-            <p-password
-              id="confirmPassword"
-              formControlName="confirmPassword"
-              placeholder="Nhập lại mật khẩu"
-            ></p-password>
-          </div>
-
+          <!-- Vai trò -->
           <div class="p-field">
             <label for="role">Vai trò</label>
             <p-dropdown
               id="role"
+              [options]="roles"
               optionLabel="label"
+              optionValue="value"
               formControlName="role"
               placeholder="Chọn vai trò"
             ></p-dropdown>
-          </div> -->
+          </div>
 
-          <!-- Conditional fields for Supplier -->
-          <div>
+          <!-- Chỉ hiện khi là Supplier -->
+          <div *ngIf="registerForm.get('role')?.value === 'SUPPLIER'">
             <div class="p-field">
               <label for="address">Địa chỉ</label>
               <input
@@ -90,7 +85,12 @@
             </div>
           </div>
 
-          <button pButton type="submit" class="w-100 mt-3">Đăng Ký</button>
+          <button
+            pButton
+            type="submit"
+            label="Đăng ký"
+            class="w-100 mt-3"
+          ></button>
 
           <p class="small fw-bold mt-2 pt-1 mb-2 text-center">
             Đã có tài khoản?
@@ -103,12 +103,6 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div>LogisTech © 2024. Tất cả quyền được bảo lưu.</div>
-    <div class="social">
-      <a href="#"><i class="pi pi-facebook"></i></a>
-      <a href="#"><i class="pi pi-twitter"></i></a>
-      <a href="#"><i class="pi pi-google"></i></a>
-      <a href="#"><i class="pi pi-linkedin"></i></a>
-    </div>
+    <app-footer></app-footer>
   </footer>
 </div>

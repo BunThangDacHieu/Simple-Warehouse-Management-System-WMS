@@ -1,11 +1,16 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 export const apiKeyInterceptor: HttpInterceptorFn = (req, next) => {
-  const authToken = localStorage.getItem('token');
+  if(req.url.includes('/login') || req.url.includes('/register')){
+    return next(req)
+  }
+  const authToken = sessionStorage.getItem('accessToken');
   if (authToken) {
-    const modifiedReq = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${authToken}`),
+    const cloned = req.clone({
+      setHeaders:{
+        Authorization: `Bearer ${authToken}`
+      }
     });
+    return next(cloned);
   }
   return next(req);
 };

@@ -4,16 +4,19 @@ import { LoginComponent } from './page/auth/login/login.component';
 import { SignupComponent } from './page/auth/signup/signup.component';
 import { ForgotpasswordComponent } from './page/auth/forgotpassword/forgotpassword.component';
 import { guardUserGuard } from './core/guard/guard-user.guard';
+import {HomeComponent} from './layout/home/home.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'home',
-    component: WarehouseListComponent,
+    component: HomeComponent,
     canActivate: [guardUserGuard],
-    data: { expectedRoles: ['ROLE_CUSTOMER', 'ROLE_MANAGER', 'ROLE_SUPPLIER'] },
+    data: { roles: ["ROLE_CUSTOMER", "ROLE_MANAGER", "ROLE_SUPPLIER"] },
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotpasswordComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' }
 ];

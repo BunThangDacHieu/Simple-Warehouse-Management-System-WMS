@@ -15,6 +15,9 @@ import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import {DropdownModule} from 'primeng/dropdown';
+import {FooterComponent} from '../../../layout/footer/footer.component';
+import {ImageLoginSignupComponent} from '../../../layout/image-login-signup/image-login-signup.component';
 @Component({
   selector: 'app-signup',
   imports: [
@@ -26,12 +29,20 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     CardModule,
     ToastModule,
+    DropdownModule,
+    FooterComponent,
+    ImageLoginSignupComponent
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
   registerForm: FormGroup;
+
+  roles = [
+    { label: 'Người mua', value: 'CUSTOMER' },
+    { label: 'Nhà cung cấp', value: 'SUPPLIER' }
+  ];
 
   constructor(
     private authService: AuthService,
@@ -40,29 +51,43 @@ export class SignupComponent {
     private messageService: MessageService
   ) {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      address: [''],
-      phone: ['', Validators.pattern('^[0-9]{10}$')],
+      password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$')]],
+      address: ['', [Validators.required, Validators.pattern('^[\\p{L}0-9 ,.\\-]+$')]],
+      phone: ['', [Validators.pattern('^0[0-9]{9}$')]],
+      role: [null, [Validators.required]],
     });
   }
 
   register() {
     this.authService.register(this.registerForm.value).subscribe(
       (response) => {
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'success',
+          detail: 'Đăng ký tài khoản thành công'
+        });
         this.router.navigate(['/login']);
       },
       (error) => {
-        console.log('Full error object:', error);
-        console.log('Error status:', error.status);
-        console.log('Error body:', error.error);
-
-        this.messageService.add({
-          severity: 'error',
-          summary: error.error?.message || 'Error',
-          detail: error.error?.name || 'Unknown error',
-        });
+        const errors = error.error;
+        if(errors && typeof errors === 'object'){
+          Object.keys(errors).forEach(key =>{
+            this.messageService.add({
+              severity: 'error',
+              summary: key,
+              detail: errors[key]
+            })
+          });
+        } else{
+          this.messageService.add({
+            severity: 'error',
+            summary: errors,
+            detail: error.error?.message || 'Unknown Error'
+          })
+        }
       }
     );
   }

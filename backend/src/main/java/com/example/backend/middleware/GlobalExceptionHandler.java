@@ -28,23 +28,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
-    @ExceptionHandler({
-        BadRequestException.class,
-        InvalidInputException.class
-    })
+    @ExceptionHandler({BadRequestException.class, InvalidInputException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleBadRequestException(Exception ex) {
-        int statusCode = (ex instanceof BadRequestException) ? ((BadRequestException) ex).getStatusCode() : ((InvalidInputException) ex).getStatusCode();
+        int statusCode = (ex instanceof BadRequestException)
+                ? ((BadRequestException) ex).getStatusCode()
+                : ((InvalidInputException) ex).getStatusCode();
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), statusCode);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Map<String, String>> handleException(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errorResponse = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error -> errorResponse.put(error.getField(), error.getDefaultMessage()));
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        ex.getBindingResult().getFieldErrors()
+                .forEach(error -> errorResponse.put(error.getField(), error.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

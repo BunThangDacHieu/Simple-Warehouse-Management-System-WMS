@@ -3,13 +3,9 @@
 <div class="login-container">
   <!-- Content -->
   <div class="content">
-    <div class="image">
-      <img
-        src="https://www.dropoff.com/wp-content/webp-express/webp-images/uploads/2022/05/What-Is-Manufacturing-Logistics-and-What-Does-It-Involve-01-1536x900.jpg.webp"
-        alt="Sample"
-      />
+    <div class="image-side">
+    <app-image-login-signup></app-image-login-signup>
     </div>
-
     <div class="form">
       <p-card class="shadow">
         <h2 class="text-center">Đăng Nhập</h2>
@@ -39,9 +35,11 @@
             <p-checkbox
               formControlName="rememberMe"
               binary="true"
+
               label="Nhớ mật khẩu"
+
             ></p-checkbox>
-            <a href="/forgot-password">Quên mật khẩu?</a>
+            <a class="forgot" href="/forgot-password">Quên mật khẩu?</a>
           </div>
 
           <button pButton type="submit" class="w-100 mt-3">Đăng Nhập</button>
@@ -57,12 +55,6 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div>LogisTech © 2024. Tất cả quyền được bảo lưu.</div>
-    <div class="social">
-      <a href="#"><i class="pi pi-facebook"></i></a>
-      <a href="#"><i class="pi pi-twitter"></i></a>
-      <a href="#"><i class="pi pi-google"></i></a>
-      <a href="#"><i class="pi pi-linkedin"></i></a>
-    </div>
+    <app-footer></app-footer>
   </footer>
 </div>

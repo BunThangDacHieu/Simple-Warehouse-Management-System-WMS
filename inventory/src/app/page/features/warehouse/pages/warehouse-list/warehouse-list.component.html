@@ -1,4 +1,4 @@
-<p-toast></p-toast>
+<p-toast/>
 
 <p-button
   label="Show Warehouses"
@@ -60,17 +60,17 @@
   </p-table>
 </p-dialog>
 
-<app-warehouse-detail (dialogInfoVisibleChange)="(showDialogInfo)">
+<app-warehouse-detail (dialogInfoVisibleChange)="(showDialog())">
 </app-warehouse-detail>
 
 <app-warehouse-detail-create
-  (dialogCreateVisibleChange)="(showDialogCreate)"
+  (dialogCreateVisibleChange)="(showDialog())"
   (newWarehouseCreated)="handleWarehouseCreated($event)"
 ></app-warehouse-detail-create>
 
 <app-warehouse-detail-update
-  (selectedWarehouse)="(selectedWarehouse)"
-  (dialogUpdateVisibleChange)="(showDialogUpdate)"
+  [warehouse]="(selectedWarehouse)"
+  (dialogUpdateVisibleChange)="(showDialog())"
   (warehouseUpdated)="handleWarehouseUpdated($event)"
 >
 </app-warehouse-detail-update>

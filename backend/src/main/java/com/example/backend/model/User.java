@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,12 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "User")
@@ -25,13 +21,15 @@ public class User {
     // @Min(value = 1, message = "ID must be greater than 0")
     private int id;
     @NotNull
-    @Size(min = 10, max = 20, message = "Name must greater than 10 characters and less than 20 characters abc")
+    @Size(min = 10, max = 20, message = "Tên phải có ít nhất 10 chữ cái, đầy đủ tên")
     private String name;
-    @Email
     @NotNull
+    @Email(message = "Cần đúng định dạng Email")
     private String email;
     @NotNull
-    @Pattern(regexp = ".*\\d.*", message = "must contain at least one numeric character")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$",
+            message = "Mật khẩu cần bao gồm chữ cái viết Hoa, chữ thường, số, và kí tự đặc biệt và có độ dài ít nhất là 8"
+    )
     private String password;
     @Enumerated(EnumType.STRING)
     private role role;
@@ -41,20 +39,26 @@ public class User {
         MANAGER,
         CUSTOMER
     }
-    @Size(min = 5, max = 20, message = "Name of contract person must greater than 5 characters and less than 20 characters")
+    @Size(min = 10, max = 20, message = "Tên của người liên hệ cần ít nhất 10 chữ cái, và đầy đủ họ và tên")
     private String contract_person;
-    @Digits(integer = 10, fraction = 0, message = "Phone must be up to 10 digits")
-    private int phone;
-
+    @NotNull
+    @Pattern(regexp = "^0[0-9]{9}$", message="Cần bắt đầu bằng số 0")
+    private String phone;
+    @NotBlank(message = "Làm ơn, không được làm trống địa chỉ")
+    @Pattern(
+            regexp = "^(?=.*\\p{L})[\\p{L}0-9 ,.-]+$",
+            message = "Địa chỉ phải chính xác"
+    )
     private String address;
     @OneToOne(mappedBy = "user")
+    @JsonIgnore
     private Customer customer;
 
     public User() {
     }
 
     public User(int id, String name, String email, String password, com.example.backend.model.User.role role,
-            String contract_person, int phone, String address, Customer customer) {
+            String contract_person, String phone, String address, Customer customer) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -122,11 +126,11 @@ public class User {
         this.contract_person = contract_person;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

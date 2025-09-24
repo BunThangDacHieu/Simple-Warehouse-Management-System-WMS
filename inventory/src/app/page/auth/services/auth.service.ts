@@ -11,7 +11,7 @@ export class AuthService {
   private baseUrl = environment.baseUrl;
   private authUrl = `${this.baseUrl}/api/auth`;
   private loggedIn = new BehaviorSubject<boolean>(
-    !!localStorage.getItem('accessToken')
+    !!sessionStorage.getItem('accessToken')
   );
   isLoggedIn$ = this.loggedIn.asObservable();
   constructor(private http: HttpClient) {}
@@ -30,7 +30,9 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('accessToken');
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('roles');
     this.loggedIn.next(false);
   }
   setLoggedIn(status: boolean) {
@@ -38,8 +40,9 @@ export class AuthService {
   }
 
   isUserLoggedIn() {
-    return !!localStorage.getItem('accessToken');
+    return !!sessionStorage.getItem('accessToken');
   }
+
 
   getToken() {
     return sessionStorage.getItem('accessToken');
