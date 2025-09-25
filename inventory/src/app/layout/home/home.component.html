@@ -36,7 +36,11 @@
           </h2>
         </div>
         <div class="card-content">
-          <app-warehouse-list></app-warehouse-list>
+          <p-button
+            label="Xem Danh sách Kho"
+            icon="pi pi-list"
+            (click)="showWarehouseDialog = true">
+          </p-button>
         </div>
       </div>
 
@@ -49,9 +53,37 @@
           </h2>
         </div>
         <div class="card-content">
-          <app-user-list></app-user-list>
+          <p-button
+            label="Xem Danh sách Người dùng"
+            icon="pi pi-users"
+            (click)="showUserDialog = true">
+          </p-button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Warehouse Dialog -->
+<p-dialog
+  header="Danh sách Kho hàng"
+  [(visible)]="showWarehouseDialog"
+  [modal]="true"
+  [style]="{ width: '80vw' }"
+  [contentStyle]="{ height: '70vh', overflow: 'auto' }">
+  <app-warehouse-list></app-warehouse-list>
+  <!-- Chart -->
+  <div style="margin-top: 20px;">
+  <app-chart-warehouse></app-chart-warehouse>
+</div>
+</p-dialog>
+
+<!-- User Dialog -->
+<p-dialog
+  header="Danh sách Người dùng"
+  [(visible)]="showUserDialog"
+  [modal]="true"
+  [style]="{ width: '80vw' }"
+  [contentStyle]="{ height: '70vh', overflow: 'auto' }">
+  <app-user-list></app-user-list>
+</p-dialog>

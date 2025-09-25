@@ -1,18 +1,9 @@
 package com.example.backend.controller;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.model.Warehouse;
 import com.example.backend.service.WarehouseService;
@@ -28,6 +19,13 @@ public class WarehouseController {
     public WarehouseController(WarehouseService warehouseService) {
         this.warehouseService = warehouseService;
     }
+
+    /*----------------------------------Ngoài lề----------------------------------------*/
+    @GetMapping("/warehouse-capacity")
+    public ResponseEntity<List<Map<String, Object>>> warehouseCapacity() {
+        return ResponseEntity.ok(warehouseService.countCapacityofWarehoses());
+    }
+
 
     /*-----------------------------------CRUD cơ bản----------------------------------- */
     @GetMapping

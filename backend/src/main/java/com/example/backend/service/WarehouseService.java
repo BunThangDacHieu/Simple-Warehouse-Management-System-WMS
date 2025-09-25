@@ -1,8 +1,6 @@
 package com.example.backend.service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +18,23 @@ public class WarehouseService {
 
     public WarehouseService(WarehouseRepository warehouseRepository) {
         this.warehouseRepository = warehouseRepository;
+    }
+
+    /*--------------------------------------Chart-------------------------------------------*/
+    public List<Map<String, Object>> countCapacityofWarehoses() {
+        try {
+            List<Object[]> result = warehouseRepository.warehouseCapacity();
+            List<Map<String, Object>> list = new ArrayList<>();
+            for(Object[] obj : result){
+                Map<String, Object> map = new HashMap<>();
+                map.put("name", obj[0]);
+                map.put("capacity", obj[1]);
+                list.add(map);
+            }
+            return list;
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     /*-------------------------------------CRUD cơ bản------------------------------------- */
@@ -75,4 +90,5 @@ public class WarehouseService {
     /*-------------------------------------Logic nghiệp vụ------------------------------------- */
 
     //Số lượng mặt hàng trong một kho cụ thể, thông tin Inventory trong một Warehouse
+
 }
