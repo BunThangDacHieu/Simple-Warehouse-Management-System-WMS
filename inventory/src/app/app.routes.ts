@@ -5,6 +5,7 @@ import { SignupComponent } from './page/auth/signup/signup.component';
 import { ForgotpasswordComponent } from './page/auth/forgotpassword/forgotpassword.component';
 import { guardUserGuard } from './core/guard/guard-user.guard';
 import {HomeComponent} from './layout/home/home.component';
+import {ErrorpageComponent} from './layout/errorpage/errorpage.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,6 +18,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotpasswordComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home' }
+  { path: '404',  component: ErrorpageComponent },
+  { path: '**', redirectTo: '/404' }
 ];

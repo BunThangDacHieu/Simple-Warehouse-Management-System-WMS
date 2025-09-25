@@ -1,13 +1,405 @@
 .footer {
-  background: #007bff;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   color: white;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
 
-  .social a {
-    color: white;
-    margin: 0 0.5rem;
-    font-size: 1.2rem;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    z-index: 1;
+  }
+
+  .footer-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding: 4rem 2rem 2rem;
+
+    .footer-section {
+      &.company-info {
+        .footer-logo {
+          margin-bottom: 1.5rem;
+
+          .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+
+            .logo-icon {
+              width: 50px;
+              height: 50px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              border-radius: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+
+              i {
+                font-size: 1.8rem;
+                color: white;
+              }
+            }
+
+            .logo-text {
+              display: flex;
+              flex-direction: column;
+              line-height: 1;
+
+              .logo-primary {
+                font-size: 1.8rem;
+                font-weight: 800;
+                color: white;
+                letter-spacing: 0.5px;
+              }
+
+              .logo-secondary {
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #667eea;
+                letter-spacing: 1px;
+              }
+            }
+          }
+        }
+
+        .company-description {
+          color: #bdc3c7;
+          line-height: 1.6;
+          margin-bottom: 2rem;
+          font-size: 0.95rem;
+        }
+
+        .contact-info {
+          .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: #ecf0f1;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+
+            i {
+              color: #667eea;
+              font-size: 1rem;
+              width: 16px;
+            }
+
+            &:hover {
+              color: #667eea;
+            }
+          }
+        }
+      }
+
+      .section-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 30px;
+          height: 3px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 2px;
+        }
+      }
+
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 0.75rem;
+
+          a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.25rem 0;
+
+            i {
+              color: #667eea;
+              font-size: 0.8rem;
+              width: 16px;
+              transition: transform 0.3s ease;
+            }
+
+            &:hover {
+              color: #667eea;
+              transform: translateX(5px);
+
+              i {
+                transform: scale(1.1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem 2rem;
+
+    .footer-bottom-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      .copyright {
+        p {
+          margin: 0;
+          color: #95a5a6;
+          font-size: 0.9rem;
+        }
+      }
+
+      .footer-legal {
+        display: flex;
+        gap: 2rem;
+
+        a {
+          color: #95a5a6;
+          text-decoration: none;
+          font-size: 0.85rem;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #667eea;
+          }
+        }
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+
+        .social-link {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+
+          i {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+          }
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+          }
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+
+            i {
+              transform: scale(1.1);
+            }
+
+            &::before {
+              opacity: 1;
+            }
+          }
+
+          &.facebook {
+            background: rgba(59, 89, 152, 0.2);
+            color: #3b5998;
+
+            &:hover {
+              color: white;
+            }
+          }
+
+          &.twitter {
+            background: rgba(29, 161, 242, 0.2);
+            color: #1da1f2;
+
+            &:hover {
+              color: white;
+            }
+          }
+
+          &.linkedin {
+            background: rgba(0, 119, 181, 0.2);
+            color: #0077b5;
+
+            &:hover {
+              color: white;
+            }
+          }
+
+          &.youtube {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff0000;
+
+            &:hover {
+              color: white;
+            }
+          }
+
+          &.github {
+            background: rgba(51, 51, 51, 0.2);
+            color: #333;
+
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .footer .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 3rem 2rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+
+      .footer-section.company-info {
+        .footer-logo .logo-container {
+          justify-content: center;
+        }
+
+        .contact-info {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+
+        li {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .footer-bottom {
+      padding: 1.5rem;
+
+      .footer-bottom-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+
+        .footer-legal {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    .footer-main {
+      padding: 2rem 1rem 1.5rem;
+
+      .footer-section.company-info {
+        .footer-logo .logo-container {
+          .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            i {
+              font-size: 1.5rem;
+            }
+          }
+
+          .logo-text {
+            .logo-primary {
+              font-size: 1.5rem;
+            }
+
+            .logo-secondary {
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+    }
+
+    .footer-bottom .footer-bottom-content {
+      .social-links {
+        gap: 0.75rem;
+
+        .social-link {
+          width: 35px;
+          height: 35px;
+
+          i {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
   }
 }

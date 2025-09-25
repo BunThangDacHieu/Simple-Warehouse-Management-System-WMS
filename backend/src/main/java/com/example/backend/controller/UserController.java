@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,16 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    /*-------------------------------------Util-------------------------------------*/
+    @GetMapping("/get-count-role")
+    public ResponseEntity<Map<User.Role, Long>> getCountRole(){
+        try {
+            return ResponseEntity.ok(userService.countByUserRole());
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     /*---------------------------------CRUD cơ bản--------------------------------- */

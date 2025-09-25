@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,5 +88,16 @@ public class UserService implements UserDetailsService {
     //Auth Service
     public User findUserbyEmail(User user) {
         return userRepository.findByEmail(user.getEmail());
+    }
+
+    //Count User
+    public Map<User.Role, Long> countByUserRole(){
+        //Khởi tạo count với kiểu dữ liệu là Map, và sử dụng HashMap để tạo dạng cột với dạng dữ liệu ở phía trước là key là Role lấy từ phía role của đối tượng User
+        //Trong Long là Value cùng với khi khởi tạo thì bắt đầu trả về
+        Map<User.Role, Long> count = new HashMap<>();
+        for(User.Role role: User.Role.values()){
+            count.put(role, userRepository.countUserByRole(role));
+        }
+        return count;
     }
 }

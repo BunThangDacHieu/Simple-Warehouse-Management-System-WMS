@@ -32,9 +32,9 @@ public class User {
     )
     private String password;
     @Enumerated(EnumType.STRING)
-    private role role;
+    private Role role;
 
-    public enum role {
+    public enum Role {
         SUPPLIER,
         MANAGER,
         CUSTOMER
@@ -57,7 +57,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String email, String password, com.example.backend.model.User.role role,
+    public User(int id, String name, String email, String password, Role role,
             String contract_person, String phone, String address, Customer customer) {
         this.id = id;
         this.name = name;
@@ -110,11 +110,11 @@ public class User {
         this.password = password;
     }
 
-    public role getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(role role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

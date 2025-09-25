@@ -1,18 +1,165 @@
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: white;
+
+  .dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .dashboard-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+}
+
 .main-content {
-  display: flex;
-  justify-content: space-between; /* Đẩy hai cột về hai phía */
-  gap: 2rem; /* Thêm khoảng cách giữa các cột */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .left-section {
-  flex: 0 0 50%; /* Cho phép cột này mở rộng để chiếm không gian */
-  /* Các style khác cho cột bên trái */
+  .chart-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 1.5rem;
+      color: white;
+
+      .chart-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        i {
+          font-size: 1.3rem;
+        }
+      }
+
+      .chart-subtitle {
+        margin: 0;
+        opacity: 0.9;
+        font-size: 0.9rem;
+      }
+    }
+
+    .chart-content {
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+  }
 }
 
 .right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
-  flex: 0 0 50%; /* Chiếm 50% không gian, không co giãn */
-  /* Hoặc một giá trị cố định nếu bạn muốn: flex: 0 0 700px; */
+  .management-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      padding: 1.5rem;
+      color: white;
+
+      .management-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        i {
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    margin-bottom: 2rem;
+
+    .dashboard-title {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    .dashboard-title {
+      font-size: 1.8rem;
+    }
+
+    .dashboard-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .left-section .chart-card .card-content {
+    padding: 1rem;
+    min-height: 250px;
+  }
+
+  .right-section .management-card .card-content {
+    padding: 1rem;
+  }
 }
 
 

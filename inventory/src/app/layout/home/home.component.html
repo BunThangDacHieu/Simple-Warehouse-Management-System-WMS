@@ -1,16 +1,57 @@
 <p-toast></p-toast>
 
-<div class="main-content">
-  <div class="left-section">
-    <h2>Thống kê</h2>
-    <p>Đây là khu vực để đặt các biểu đồ, thống kê, hoặc thông tin tổng quan.</p>
+<div class="dashboard-container">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Dashboard Quản Lý Kho Hàng</h1>
+    <p class="dashboard-subtitle">Tổng quan hệ thống và thống kê</p>
   </div>
 
-  <div class="right-section">
-    <h2>Quản lý Kho hàng</h2>
-    <app-warehouse-list></app-warehouse-list>
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Left Section - Charts -->
+    <div class="left-section">
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 class="chart-title">
+            <i class="pi pi-chart-pie"></i>
+            Thống kê người dùng
+          </h3>
+          <p class="chart-subtitle">Phân bố vai trò trong hệ thống</p>
+        </div>
+        <div class="chart-content">
+          <app-chart-user></app-chart-user>
+        </div>
+      </div>
+    </div>
 
-    <h2 class="mt-4">Quản lý Người dùng</h2>
-    <app-user-list></app-user-list>
+    <!-- Right Section - Management -->
+    <div class="right-section">
+      <!-- Warehouse Management -->
+      <div class="management-card">
+        <div class="card-header">
+          <h2 class="management-title">
+            <i class="pi pi-building"></i>
+            Quản lý Kho hàng
+          </h2>
+        </div>
+        <div class="card-content">
+          <app-warehouse-list></app-warehouse-list>
+        </div>
+      </div>
+
+      <!-- User Management -->
+      <div class="management-card">
+        <div class="card-header">
+          <h2 class="management-title">
+            <i class="pi pi-users"></i>
+            Quản lý Người dùng
+          </h2>
+        </div>
+        <div class="card-content">
+          <app-user-list></app-user-list>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
