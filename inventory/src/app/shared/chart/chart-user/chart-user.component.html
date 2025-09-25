@@ -1,0 +1,25 @@
+<div class="chart-container">
+  <div class="chart-wrapper">
+    <p-chart 
+      type="pie" 
+      [data]="dataChart" 
+      [options]="options" 
+      class="chart" 
+    />
+  </div>
+  
+  <!-- Chart Legend -->
+  <div class="chart-legend" *ngIf="dataChart?.datasets?.[0]?.data">
+    <div 
+      class="legend-item" 
+      *ngFor="let label of dataChart.labels; let i = index"
+    >
+      <div 
+        class="legend-color" 
+        [style.background-color]="getLegendColor(i)"
+      ></div>
+      <span class="legend-label">{{ label }}</span>
+      <span class="legend-value">{{ dataChart.datasets[0].data[i] }}</span>
+    </div>
+  </div>
+</div>
