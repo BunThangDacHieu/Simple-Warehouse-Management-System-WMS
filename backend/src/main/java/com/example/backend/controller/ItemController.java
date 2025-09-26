@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.model.Item;
+import com.example.backend.bussinessObject.model.Item;
 import com.example.backend.service.ItemService;
 
 import jakarta.validation.Valid;

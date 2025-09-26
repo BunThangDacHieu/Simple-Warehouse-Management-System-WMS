@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.model.Inventory;
+import com.example.backend.bussinessObject.model.Inventory;
 import com.example.backend.service.InventoryService;
 
 import jakarta.validation.Valid;
 
+@SuppressWarnings("JvmTaintAnalysis")
 @RestController
 @RequestMapping("/api/inventory")
 public class InventoryController {
@@ -43,6 +44,7 @@ public class InventoryController {
         return inventory.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @SuppressWarnings("JvmTaintAnalysis")
     @PostMapping
     public ResponseEntity<Inventory> createInventory(@Valid @RequestBody Inventory inventory) {
         Inventory createInventory = inventoryService.createInventory(inventory);

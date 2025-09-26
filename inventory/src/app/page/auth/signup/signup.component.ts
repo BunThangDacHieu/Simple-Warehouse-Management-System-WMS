@@ -16,7 +16,6 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import {DropdownModule} from 'primeng/dropdown';
-import {FooterComponent} from '../../../layout/footer/footer.component';
 import {ImageLoginSignupComponent} from '../../../layout/image-login-signup/image-login-signup.component';
 @Component({
   selector: 'app-signup',
@@ -30,7 +29,6 @@ import {ImageLoginSignupComponent} from '../../../layout/image-login-signup/imag
     CardModule,
     ToastModule,
     DropdownModule,
-    FooterComponent,
     ImageLoginSignupComponent
   ],
   templateUrl: './signup.component.html',

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.Item;
+import com.example.backend.bussinessObject.model.Item;
 import com.example.backend.repository.ItemRepository;
 
 @Service

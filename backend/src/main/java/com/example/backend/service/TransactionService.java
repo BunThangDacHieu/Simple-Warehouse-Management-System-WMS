@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.Transaction;
+import com.example.backend.bussinessObject.model.Transaction;
 import com.example.backend.repository.TransactionRepository;
 import com.example.backend.util.ObjectValidator;
 

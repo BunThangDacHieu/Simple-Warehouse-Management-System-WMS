@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.example.backend.bussinessObject.dto.getUserbyIdDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.util.ObjectValidator;
-import com.example.backend.model.User;
+import com.example.backend.bussinessObject.model.User;
 import com.example.backend.repository.UserRepository;
 
 @Service
@@ -58,11 +58,20 @@ public class UserService implements UserDetailsService {
     }
 
     //Tìm dựa trên id
-    public Optional<User> findUserbyId(int id) {
+    public getUserbyIdDTO findUserbyId(int id) {
         if (id <= 0) {
             throw new IllegalArgumentException("User id must be greater than 0");
         }
-        return userRepository.findById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tìm không thấy user"));
+
+        return new getUserbyIdDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getAddress(),
+                user.getPhone()
+        );
     }
 
     //Cập nhật

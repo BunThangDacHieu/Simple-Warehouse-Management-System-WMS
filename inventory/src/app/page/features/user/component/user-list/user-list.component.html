@@ -53,3 +53,13 @@
       </ng-template>
     </p-table>
   </p-dialog>
+
+<p-dialog header="User Info" [(visible)]="dialogInfoVisible" [modal]="true">
+  <div *ngIf="selectedUser">
+    <p><b>ID:</b> {{ selectedUser.id }}</p>
+    <p><b>Name:</b> {{ selectedUser.name }}</p>
+    <p><b>Email:</b> {{ selectedUser.email }}</p>
+    <p><b>Phone:</b> {{ selectedUser.phone }}</p>
+    <p><b>Address:</b> {{ selectedUser.address }}</p>
+  </div>
+</p-dialog>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.model.Transaction;
+import com.example.backend.bussinessObject.model.Transaction;
 import com.example.backend.service.TransactionService;
 
 import jakarta.validation.Valid;

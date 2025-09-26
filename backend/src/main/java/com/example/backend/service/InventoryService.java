@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.backend.exception.BadRequestException;
-import com.example.backend.exception.NotFoundException;
-import com.example.backend.model.Inventory;
+import com.example.backend.middleware.exception.BadRequestException;
+import com.example.backend.middleware.exception.NotFoundException;
+import com.example.backend.bussinessObject.model.Inventory;
 import com.example.backend.repository.InventoryRepository;
 import com.example.backend.repository.WarehouseRepository;
 

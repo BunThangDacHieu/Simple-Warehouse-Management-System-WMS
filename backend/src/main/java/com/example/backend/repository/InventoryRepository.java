@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.backend.model.Inventory;
+import com.example.backend.bussinessObject.model.Inventory;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 

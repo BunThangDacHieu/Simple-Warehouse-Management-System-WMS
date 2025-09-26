@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.backend.model.Warehouse;
+import com.example.backend.bussinessObject.model.Warehouse;
 import com.example.backend.service.WarehouseService;
 
 import jakarta.validation.Valid;

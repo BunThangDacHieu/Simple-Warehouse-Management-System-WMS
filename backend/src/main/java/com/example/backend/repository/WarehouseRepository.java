@@ -1,7 +1,7 @@
 package com.example.backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.backend.model.Warehouse;
+import com.example.backend.bussinessObject.model.Warehouse;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.Warehouse;
+import com.example.backend.bussinessObject.model.Warehouse;
 import com.example.backend.repository.WarehouseRepository;
 import com.example.backend.util.ObjectValidator;
 

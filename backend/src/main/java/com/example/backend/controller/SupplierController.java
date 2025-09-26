@@ -5,14 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.backend.model.Supplier;
+import com.example.backend.bussinessObject.model.Supplier;
 import com.example.backend.service.SupplierService;
 import com.example.backend.util.ObjectValidator;
 
@@ -38,6 +33,16 @@ public class SupplierController {
             return ResponseEntity.ok(suppliers);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+//Tạo một Suppplier riêng
+    @PostMapping()
+    public ResponseEntity<Supplier> createSupplier(@Valid @RequestBody Supplier supplier) {
+        try {
+            return ResponseEntity.ok(supplierService.createSupplier(supplier));
+        }catch(Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 

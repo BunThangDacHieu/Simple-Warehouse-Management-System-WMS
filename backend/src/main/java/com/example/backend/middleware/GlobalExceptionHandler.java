@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.backend.dto.ErrorResponse;
-import com.example.backend.exception.BadRequestException;
-import com.example.backend.exception.InvalidInputException;
-import com.example.backend.exception.NotFoundException;
+import com.example.backend.bussinessObject.dto.ErrorResponse;
+import com.example.backend.middleware.exception.BadRequestException;
+import com.example.backend.middleware.exception.InvalidInputException;
+import com.example.backend.middleware.exception.NotFoundException;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;

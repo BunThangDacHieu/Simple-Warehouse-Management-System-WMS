@@ -21,6 +21,7 @@ import {Toast, ToastModule} from 'primeng/toast';
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
+  selectedUser?: User;
   userForm: FormGroup;
   dialogVisible = false;
   dialogInfoVisible = false;
@@ -53,7 +54,10 @@ export class UserListComponent implements OnInit {
   }
 
   showDialogInfo(user: User) {
-    this.dialogInfoVisible = true;
+    this.usersService.getUserById(user.id).subscribe(data =>{
+      this.dialogInfoVisible = true;
+      this.selectedUser = data;
+    })
   }
 
   showDialogUpdate(user: User) {
@@ -85,7 +89,7 @@ export class UserListComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'success',
-          detail: 'Update Failed'
+          detail: 'Update Success'
         });
       },
       error: () => {
@@ -113,7 +117,6 @@ export class UserListComponent implements OnInit {
   deleteUser(id: number){
     this.usersService.deleteUser(id).subscribe({
       next: ()=>{
-        this.findUserbyId(id);
         this.messageService.add({
           severity: 'success',
           summary: 'success',

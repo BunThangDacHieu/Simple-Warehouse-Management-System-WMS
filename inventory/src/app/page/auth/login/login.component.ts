@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -12,7 +11,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
-import { TokenResponse } from '../../../shared/interface/tokenResponse';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -31,7 +29,6 @@ import {ImageLoginSignupComponent} from '../../../layout/image-login-signup/imag
     ButtonModule,
     CardModule,
     ToastModule,
-    FooterComponent,
     ImageLoginSignupComponent,
   ],
   templateUrl: './login.component.html',
