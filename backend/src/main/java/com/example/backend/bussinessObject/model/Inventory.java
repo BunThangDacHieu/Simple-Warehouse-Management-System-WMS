@@ -2,6 +2,7 @@ package com.example.backend.bussinessObject.model;
 
 import java.time.Instant;
 
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -19,6 +20,11 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "inventory")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Inventory {
 
     @Id
@@ -40,63 +46,4 @@ public class Inventory {
 
     @LastModifiedDate
     private Instant updatedAt;
-
-    public Inventory() {
-    }
-
-    public Inventory(int id, Item item, Warehouse warehouse, int quantity) {
-        this.id = id;
-        this.item = item;
-        this.warehouse = warehouse;
-        this.quantity = quantity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Item getItem() {
-        return item;
-    }
-
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
 }

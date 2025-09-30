@@ -12,7 +12,7 @@ import { Dialog } from 'primeng/dialog';
 })
 export class WarehouseDetailComponent {
   @Input() selectedWarehouse?: Warehouse;
-  dialogInfoVisible = false;
+  @Input() dialogInfoVisible = false;
   @Output() dialogInfoVisibleChange = new EventEmitter<boolean>();
 
   showDialogInfo(warehouse: Warehouse) {

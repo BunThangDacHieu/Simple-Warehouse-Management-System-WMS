@@ -3,13 +3,10 @@ import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { WarehouseService } from '../../services/warehouse.service';
 import { ButtonModule } from 'primeng/button';
-import { InventoryService } from '../../../inventory/services/inventory.service';
 import { Warehouse } from '../../../../../shared/model/warehouse';
 import { WarehouseDetailComponent } from '../../components/warehouse-detail/warehouse-detail.component';
-import { Router } from '@angular/router';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { RippleModule } from 'primeng/ripple';
 import { WarehouseDetailCreateComponent } from '../../components/warehouse-detail-create/warehouse-detail-create.component';
 import { WarehouseDetailUpdateComponent } from '../../components/warehouse-detail-update/warehouse-detail-update.component';
 import {
@@ -36,7 +33,6 @@ import {UserListComponent} from '../../../user/component/user-list/user-list.com
     ReactiveFormsModule,
     InputTextModule,
     CommonModule,
-    UserListComponent
   ],
   standalone: true,
   templateUrl: './warehouse-list.component.html',

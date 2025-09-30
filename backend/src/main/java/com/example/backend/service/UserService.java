@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
-
+    /*---------------------------------Autherization----------------------------*/
     //Xây dựng user
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -47,10 +47,37 @@ public class UserService implements UserDetailsService {
 
     //Lưu người dùng với mật khẩu được mã hóa
     public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword())); //
         return userRepository.save(user);
     }
+    /*-------------------------------------------Password Reset ----------------------------------------*/
+    //Tìm kiếm người dùng dựa trên email, đồng thời thực hiện thay đổi trên cơ sở dữ liệu tại thuộc tính ResetPasswordToken của User
+    public void ResetPasswordbyToken(String token, String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email); //Tìm kiếm người dugnf dựa trên email
+        if (user != null) { //Nếu người dùng tồn tại
+            user.setResetPasswordToken(token); //Cập nhật dữ liệu của thuộc tính ResetPasswordToken
+            userRepository.save(user); //Lưu thay đổi tại bảng User
+        } else { // Nếu người dùng không tồn tại
+            throw new UsernameNotFoundException("User not found" + email); //trả lại thông báo rằng tên người dùng không tìm thấy
+        }
+    }
 
+    public User getByResetToken(String token) { //TÌm kiếm người dùng thông qua token
+        //Nếu token không tồn tại như vậy là người dùng không hợp lệ
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(User user, String newPassword){ //Cập nhật mật khẩu cho người dùng với mật khẩu mới
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); //Thông qua thư viện để gọi việc mã hóa với tên encoder
+        if(encoder.matches(newPassword, user.getPassword())){ //Kiểm tra xem mật khẩu cũ có đúng với mật khẩu mới không? Nếu có thì thông báo trùng mật khẩu
+            throw new RuntimeException("Password can't be the same");
+        } else {
+            String encoderPassword =  encoder.encode(newPassword); //Khai báo encoderPassword để chứa thông tin dữ liệu mà encoder đã mã đối với mật khẩu mới
+            user.setPassword(encoderPassword); //Cập nhật mật khẩu đã được mã háo vào trong cơ sở dữ liệu
+            user.setResetPasswordToken(null); // cập nhật lại Token để reset password để trống
+            userRepository.save(user); //Lưu thông tin mới của người dùng
+        }
+    }
     /*-------------------------------------CRUD cơ bản------------------------------------- */
     //Lấy danh sách của toàn bộ hàng hóa
     public List<User> getAllUser() {

@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import {Dialog, DialogModule} from 'primeng/dialog';
 import {CommonModule} from '@angular/common';
-import {Warehouse} from '../../../../../shared/model/warehouse';
 import {Toast, ToastModule} from 'primeng/toast';
 
 @Component({
@@ -34,7 +33,6 @@ export class UserListComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.userForm = this.fb.group({
-      // id, nam, email, password, role, contract_person,phone, address
       id: [null],
       name: ['', [Validators.minLength(10), Validators.maxLength(20)]],
       email: ['',[Validators.email]],
@@ -84,7 +82,6 @@ export class UserListComponent implements OnInit {
     this.usersService
       .updateUser(updatedUser, updatedUser.id).subscribe({
       next: () => {
-        this.getAllUser();
         this.dialogVisible = false;
         this.messageService.add({
           severity: 'success',

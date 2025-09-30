@@ -48,4 +48,9 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
     /*-------------------------------------Logic nghiệp vụ------------------------------------- */
+    //Danh sách hàng hóa theo kho
+    public List<Item> findItemListbyWarehouseId(Long warehouseId){
+        return itemRepository.findItemListbyWarehouseId(warehouseId);
+    }
+
 }

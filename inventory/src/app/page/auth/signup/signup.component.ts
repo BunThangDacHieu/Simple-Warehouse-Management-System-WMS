@@ -58,35 +58,49 @@ export class SignupComponent {
     });
   }
 
+  fieldLabels: {[key: string]: string} = {
+    Name: 'Tên',
+    Email: ' Email',
+    Password: 'Mật Khẩu',
+    Phone: ' Số điện thoại',
+    Address: 'Địa Chỉ',
+    Role: 'Vai trò'
+  }
+
   register() {
     this.authService.register(this.registerForm.value).subscribe(
       (response) => {
-
         this.messageService.add({
           severity: 'success',
-          summary: 'success',
+          summary: 'Thành công',
           detail: 'Đăng ký tài khoản thành công'
         });
         this.router.navigate(['/login']);
       },
       (error) => {
         const errors = error.error;
-        if(errors && typeof errors === 'object'){
-          Object.keys(errors).forEach(key =>{
+        console.log(errors);
+        if (errors && typeof errors === 'object') {
+          Object.keys(errors).forEach(key => {
+            const label = this.fieldLabels[key] || key;
+            const messages = Array.isArray(errors[key])
+              ? errors[key].join(', ')
+              : errors[key];
             this.messageService.add({
               severity: 'error',
-              summary: key,
-              detail: errors[key]
-            })
+              summary: label,
+              detail: messages
+            });
           });
-        } else{
+        } else {
           this.messageService.add({
             severity: 'error',
-            summary: errors,
-            detail: error.error?.message || 'Unknown Error'
-          })
+            summary: 'Lỗi',
+            detail: error.message || 'Unknown Error'
+          });
         }
       }
     );
   }
+
 }

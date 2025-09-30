@@ -7,9 +7,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 @Entity
 @Table(name = "warehouse")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Warehouse {
 
     @Id
@@ -24,47 +30,4 @@ public class Warehouse {
     // @NotNull(message = "Capacity is required, please enter capacity")
     @Min(value = 1000, message = "Capacity must be greater than 0")
     private int capacity;
-
-    public Warehouse() {
-    }
-
-    public Warehouse(int id, String name, String location, int capacity) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.capacity = capacity;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
 }

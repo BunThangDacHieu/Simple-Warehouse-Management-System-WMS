@@ -25,7 +25,7 @@ export class ItemService {
     return this.http.post<Item>(this.itemUrl, item);
   }
 
-  updateItem(id: number, item: Item) {
+  updateItem(item: Item, id: number) {
     return this.http.put<Item>(this.itemUrl + `/${id}`, item);
   }
 

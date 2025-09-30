@@ -68,22 +68,12 @@ export class LoginComponent {
         },
         (error) => {
           this.isLoading = false;
-          const errors = error.error;
-          if(errors && typeof errors === 'object'){
-            Object.keys(errors).forEach(key =>{
+          const errorMessage = error.error?.message || 'Đăng nhập thất bại. Vui lòng thử lại.';
               this.messageService.add({
                 severity: 'error',
-                summary: key,
-                detail: errors[key]
+                summary: 'error',
+                detail: errorMessage
               })
-            });
-          } else{
-            this.messageService.add({
-              severity: 'error',
-              summary: errors,
-              detail: error.error?.message || 'Unknown Error'
-            })
-          }
         }
       );
     }

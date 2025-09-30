@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
 export class WarehouseDetailCreateComponent {
   @Input() dialogVisible: boolean = false;
 
-  @Output() dialogCreateVisibleChange = new EventEmitter<boolean>();
+  @Output() dialogVisibleChange   = new EventEmitter<boolean>();
   @Output() newWarehouseCreated = new EventEmitter<Warehouse>();
 
   warehouseForm!: FormGroup;
@@ -52,9 +52,8 @@ export class WarehouseDetailCreateComponent {
       // Gửi dữ liệu form về component cha
       this.newWarehouseCreated.emit(this.warehouseForm.value as Warehouse);
 
-      // Đóng dialog sau khi lưu
       this.dialogVisible = false;
-      this.dialogCreateVisibleChange.emit(this.dialogVisible);
+      this.dialogVisibleChange .emit(this.dialogVisible);
 
       // Reset form
       this.warehouseForm.reset();

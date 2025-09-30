@@ -28,7 +28,7 @@ public class ItemController {
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
-
+    /*----------------------------------CRUD cơ bản----------------------------*/
     @GetMapping
     public ResponseEntity<List<Item>> getAllItem() {
         try {
@@ -77,6 +77,17 @@ public class ItemController {
             return ResponseEntity.ok().body("Delete successfully");
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /*-----------------------------------Nâng cao-------------------------*/
+    @GetMapping("/warehouse/{warehouseId}")
+    public ResponseEntity<List<Item>> findItemListbyWarehouseId(@PathVariable Long warehouseId){
+        try {
+            List<Item> items = itemService.findItemListbyWarehouseId(warehouseId);
+            return ResponseEntity.ok(items);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

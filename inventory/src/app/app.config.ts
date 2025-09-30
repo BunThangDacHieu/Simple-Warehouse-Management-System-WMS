@@ -17,6 +17,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    MessageService,
     provideHttpClient(
       withInterceptorsFromDi(),
       withInterceptors([apiKeyInterceptor])

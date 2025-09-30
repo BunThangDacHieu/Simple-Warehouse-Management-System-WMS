@@ -31,7 +31,7 @@
           <div class="form-group">
             <label for="name" class="form-label">
               <i class="pi pi-user"></i>
-              Họ và tên
+              Họ và tên <span style="color: red">*</span>
             </label>
             <input
               id="name"
@@ -63,7 +63,7 @@
           <div class="form-group">
             <label for="password" class="form-label">
               <i class="pi pi-lock"></i>
-              Mật khẩu
+              Mật khẩu <span style="color: red">*</span>
             </label>
             <p-password
               id="password"
@@ -75,11 +75,10 @@
             ></p-password>
           </div>
 
-          <!-- Vai trò -->
           <div class="form-group">
             <label for="role" class="form-label">
               <i class="pi pi-briefcase"></i>
-              Vai trò
+              Vai trò<span style="color: red">*</span>
             </label>
             <p-dropdown
               id="role"
@@ -92,7 +91,6 @@
             ></p-dropdown>
           </div>
 
-          <!-- Chỉ hiện khi là Supplier -->
           <div class="supplier-fields" *ngIf="registerForm.get('role')?.value === 'SUPPLIER'">
             <div class="supplier-header">
               <h4 class="supplier-title">

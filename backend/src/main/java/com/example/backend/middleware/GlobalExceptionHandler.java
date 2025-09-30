@@ -1,6 +1,8 @@
 package com.example.backend.middleware;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -40,11 +42,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errorResponse = new HashMap<>();
-        ex.getBindingResult().getFieldErrors()
-                .forEach(error -> errorResponse.put(error.getField(), error.getDefaultMessage()));
-        return ResponseEntity.badRequest().body(errorResponse);
+    public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error -> {
+            errors.put(error.getField(), error.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

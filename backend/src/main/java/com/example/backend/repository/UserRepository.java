@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByPhone(String phone);
 
     Long countUserByRole(User.Role role);
+
+    public User findByResetPasswordToken(String token);
 }

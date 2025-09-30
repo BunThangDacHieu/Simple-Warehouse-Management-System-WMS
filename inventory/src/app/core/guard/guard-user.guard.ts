@@ -40,9 +40,6 @@ export const guardUserGuard: CanActivateFn = (route, state) => {
     }
     // Kiểm tra giao nhau giữa userRoles và requiredRoles
     const hasAccess: any = requiredRoles.some(role => userRoles.includes(role));
-    console.log("User roles:", userRoles);
-    console.log("Required roles:", requiredRoles);
-    console.log("Has access:", hasAccess);
     if (hasAccess) {
       return true;
     } else {

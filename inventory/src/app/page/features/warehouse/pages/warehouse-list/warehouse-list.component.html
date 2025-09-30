@@ -60,17 +60,21 @@
   </p-table>
 </p-dialog>
 
-<app-warehouse-detail (dialogInfoVisibleChange)="(showDialog())">
+<app-warehouse-detail
+  [selectedWarehouse]="selectedWarehouse"
+  [dialogInfoVisible]="dialogInfoVisible"
+  (dialogInfoVisibleChange)="dialogInfoVisible = $event">
 </app-warehouse-detail>
 
 <app-warehouse-detail-create
-  (dialogCreateVisibleChange)="(showDialog())"
-  (newWarehouseCreated)="handleWarehouseCreated($event)"
-></app-warehouse-detail-create>
+  [dialogVisible]="dialogCreateVisible"
+  (dialogVisibleChange)="dialogCreateVisible = $event"
+  (newWarehouseCreated)="handleWarehouseCreated($event)">
+</app-warehouse-detail-create>
 
 <app-warehouse-detail-update
-  [warehouse]="(selectedWarehouse)"
-  (dialogUpdateVisibleChange)="(showDialog())"
-  (warehouseUpdated)="handleWarehouseUpdated($event)"
->
+  [warehouse]="selectedWarehouse"
+  [dialogUpdateVisible]="dialogUpdateVisible"
+  (dialogUpdateVisibleChange)="dialogUpdateVisible = $event"
+  (warehouseUpdated)="handleWarehouseUpdated($event)">
 </app-warehouse-detail-update>

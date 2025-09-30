@@ -1,13 +1,14 @@
 package com.example.backend.bussinessObject.dto;
 
-public class AuthResponse {
+public class AuthResponseDTO {
 
     private String accessToken;
     private String refreshToken;
 
-    public AuthResponse(String accessToken, String refreshToken) {
+    public AuthResponseDTO(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+
     }
 
     public String getAccessToken() {
@@ -25,5 +26,5 @@ public class AuthResponse {
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
-
 }
+
