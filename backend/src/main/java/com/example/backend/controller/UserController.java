@@ -1,18 +1,10 @@
 package com.example.backend.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import com.example.backend.bussinessObject.dto.getUserbyIdDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.bussinessObject.model.User;
 import com.example.backend.service.UserService;
@@ -59,7 +51,7 @@ public class UserController {
                     users.getName(),
                     users.getEmail(),
                     users.getAddress(),
-                    users.getPhone()
+                    users.getPhone  ()
             ));
         } catch (Exception e) {
             throw new RuntimeException(e);

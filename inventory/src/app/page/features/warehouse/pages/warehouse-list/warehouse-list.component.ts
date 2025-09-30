@@ -11,14 +11,12 @@ import { WarehouseDetailCreateComponent } from '../../components/warehouse-detai
 import { WarehouseDetailUpdateComponent } from '../../components/warehouse-detail-update/warehouse-detail-update.component';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import {UserListComponent} from '../../../user/component/user-list/user-list.component';
 
 @Component({
   selector: 'app-warehouse-list',

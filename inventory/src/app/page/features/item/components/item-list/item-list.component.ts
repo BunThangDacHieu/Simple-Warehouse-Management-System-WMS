@@ -7,17 +7,9 @@ import {Item} from '../../../../../shared/model/item';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {Toast} from 'primeng/toast';
-import {WarehouseDetailComponent} from '../../../warehouse/components/warehouse-detail/warehouse-detail.component';
-import {
-  WarehouseDetailCreateComponent
-} from '../../../warehouse/components/warehouse-detail-create/warehouse-detail-create.component';
-import {
-  WarehouseDetailUpdateComponent
-} from '../../../warehouse/components/warehouse-detail-update/warehouse-detail-update.component';
-
 @Component({
   selector: 'app-item-list',
-  imports: [TableModule, Button, Dialog, Toast, WarehouseDetailComponent, WarehouseDetailCreateComponent, WarehouseDetailUpdateComponent],
+  imports: [TableModule, Button, Dialog, Toast],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
 })

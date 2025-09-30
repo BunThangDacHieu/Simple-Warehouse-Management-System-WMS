@@ -1,7 +1,6 @@
 package com.example.backend.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class ItemService {
     }
 
     //Tìm dựa trên id
-    public Optional<Item> findItembyId(int id) {
+    public Optional<Item> findItembyId(long id) {
         return itemRepository.findById(id);
     }
 
@@ -44,7 +43,7 @@ public class ItemService {
     }
 
     //Xóa
-    public void deleteItem(int id) {
+    public void deleteItem(long id) {
         itemRepository.deleteById(id);
     }
     /*-------------------------------------Logic nghiệp vụ------------------------------------- */

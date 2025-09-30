@@ -20,12 +20,12 @@ export class ChartUserComponent implements OnInit {
       let roleArray: any[] = [];
 
       if(!Array.isArray(data)){
-        roleArray = Object.keys(data).map(key =>({
+        roleArray = Object.keys(data).filter(key => key != 'MANAGER').map(key => ({
           role: key,
           count: data[key]
         }))
       } else{
-        roleArray = data;
+        roleArray = data.filter(key => key != 'MANAGER')
       }
 
 

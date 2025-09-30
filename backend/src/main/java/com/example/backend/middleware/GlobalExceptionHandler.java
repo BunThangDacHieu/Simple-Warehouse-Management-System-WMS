@@ -1,24 +1,15 @@
 package com.example.backend.middleware;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.bussinessObject.dto.ErrorResponse;
-import com.example.backend.middleware.exception.BadRequestException;
-import com.example.backend.middleware.exception.InvalidInputException;
-import com.example.backend.middleware.exception.NotFoundException;
-
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
+import com.example.backend.middleware.exception.*;
+import jakarta.validation.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

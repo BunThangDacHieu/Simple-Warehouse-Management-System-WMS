@@ -35,13 +35,12 @@ public class WarehouseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Warehouse>> getWarehouseById(@Valid @PathVariable int id) {
-        try {
-            Optional<Warehouse> warehouse = warehouseService.findWarehousebyId(id);
-            return ResponseEntity.ok(warehouse);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<Warehouse> getWarehouseById(@Valid @PathVariable int id) {
+        return warehouseService.findWarehousebyId(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity
+                        .notFound()
+                        .build());
     }
 
     @PostMapping

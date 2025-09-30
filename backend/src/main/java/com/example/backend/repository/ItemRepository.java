@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item, Integer> {
+public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT i.item from Inventory i where i.warehouse.id =  :warehouseId")
     List<Item> findItemListbyWarehouseId(Long warehouseId);
 

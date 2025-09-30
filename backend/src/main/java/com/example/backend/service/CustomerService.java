@@ -1,12 +1,10 @@
 package com.example.backend.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
-import com.example.backend.middleware.exception.BadRequestException;
-import com.example.backend.middleware.exception.NotFoundException;
+import com.example.backend.middleware.exception.*;
 import com.example.backend.bussinessObject.model.Customer;
 import com.example.backend.repository.CustomerRepository;
 

@@ -31,7 +31,7 @@ public class User {
     )
     private String password;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    public Role role;
 
     public enum Role {
         SUPPLIER,
@@ -43,7 +43,7 @@ public class User {
     @NotNull
     @Pattern(regexp = "^0[0-9]{9}$", message="Cần bắt đầu bằng số 0")
     private String phone;
-    @NotBlank(message = "Làm ơn, không được làm trống địa chỉ")
+    @NotBlank(message = "Không được làm trống địa chỉ")
     @Pattern(
             regexp = "^(?=.*\\p{L})[\\p{L}0-9 ,.-]+$",
             message = "Địa chỉ phải chính xác"

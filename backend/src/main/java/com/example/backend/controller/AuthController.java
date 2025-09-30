@@ -1,27 +1,17 @@
 package com.example.backend.controller;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import com.example.backend.bussinessObject.dto.AuthResponseDTO;
-import com.example.backend.bussinessObject.dto.ErrorResponse;
+import com.example.backend.bussinessObject.dto.*;
 import com.example.backend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import com.example.backend.service.MailService;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.ui.Model;
+import org.springframework.http.*;
+import com.example.backend.service.*;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.backend.bussinessObject.dto.AuthResponseDTO;
 import com.example.backend.bussinessObject.model.User;
-import com.example.backend.service.UserService;
 import com.example.backend.util.JwtUtil;
 
 import jakarta.validation.Valid;

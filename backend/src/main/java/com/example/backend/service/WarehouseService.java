@@ -3,6 +3,7 @@ package com.example.backend.service;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.bussinessObject.model.Warehouse;
@@ -21,6 +22,7 @@ public class WarehouseService {
     }
 
     /*--------------------------------------Chart-------------------------------------------*/
+
     public List<Map<String, Object>> countCapacityofWarehoses() {
         try {
             List<Object[]> result = warehouseRepository.warehouseCapacity();
@@ -44,6 +46,7 @@ public class WarehouseService {
     }
 
     //Tìm dựa trên id
+    @Cacheable(value = "findWarehousebyId", key = "#id")
     public Optional<Warehouse> findWarehousebyId(int id) {
         Map<String, String> errors = objectValidator.getRequestAndSummitErrors(id);
         if (!errors.isEmpty()) {
