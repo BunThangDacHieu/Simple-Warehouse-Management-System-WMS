@@ -32,4 +32,8 @@ export class ItemService {
   deleteItem(id: number) {
     return this.http.delete(this.itemUrl + `/${id}`);
   }
+
+  getItemByWarehouseId(warehouseId: number): Observable<Item[]> {
+    return this.http.get<Item[]>(this.itemUrl + `/warehouse/${warehouseId}`);
+  }
 }

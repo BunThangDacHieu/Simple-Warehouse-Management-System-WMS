@@ -7,6 +7,7 @@ import {HomeComponent} from './layout/home/home.component';
 import {ErrorpageComponent} from './layout/errorpage/errorpage.component';
 import {UserDetailComponent} from './page/features/user/pages/user-detail/user-detail.component';
 import {ItemListComponent} from './page/features/item/components/item-list/item-list.component';
+import {WarehouseItemComponent} from './page/features/warehouse/components/warehouse-item/warehouse-item.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotpasswordComponent },
   { path: 'item-list', component: ItemListComponent},
+  {path: 'warehouse/:id', component: WarehouseItemComponent},
   { path: '404',  component: ErrorpageComponent },
   { path: '**', redirectTo: '/404' }
 ];

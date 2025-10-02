@@ -1,0 +1,73 @@
+<p-toast/>
+
+<div class="container">
+  <!-- Header với thông tin warehouse -->
+  <div class="warehouse-header">
+    <div class="header-content">
+      <p-button
+        icon="pi pi-arrow-left"
+        label="Back to Warehouses"
+        [outlined]="true"
+        (click)="goBack()">
+      </p-button>
+
+      <div class="warehouse-info" *ngIf="warehouse">
+        <h2>Items in {{ warehouse.name }}</h2>
+        <p class="warehouse-details">
+          <span><i class="pi pi-map-marker"></i> {{ warehouse.location }}</span>
+          <span><i class="pi pi-box"></i> Capacity: {{ warehouse.capacity }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid layout cho items -->
+  <div class="items-grid" *ngIf="items.length > 0">
+    <p-card *ngFor="let item of items" class="item-card">
+      <div class="item-image">
+        <img
+          [src]="'https://images.pexels.com/photos/884788/pexels-photo-884788.jpeg'"
+          [alt]="item.name">
+      </div>
+
+      <div class="item-content">
+        <span class="item-id">{{ item.itemId }}</span>
+        <h3 class="item-name">{{ item.name }}</h3>
+        <p class="item-description">{{ item.description }}</p>
+
+        <div class="item-meta">
+              <span class="quantity">
+                <i class="pi pi-box"></i>
+                {{ item.quantity }} {{ item.unit }}
+              </span>
+        </div>
+
+        <div class="item-actions">
+          <p-button
+            label="View Details"
+            icon="pi pi-eye"
+            [outlined]="true"
+            severity="info">
+          </p-button>
+          <p-button
+            label="Edit"
+            icon="pi pi-pencil"
+            >
+          </p-button>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="items.length === 0">
+    <i class="pi pi-inbox"></i>
+    <h3>No items in this warehouse</h3>
+    <p>This warehouse doesn't have any items yet.</p>
+    <p-button
+      label="Add First Item"
+      icon="pi pi-plus"
+      severity="success">
+    </p-button>
+  </div>
+</div>

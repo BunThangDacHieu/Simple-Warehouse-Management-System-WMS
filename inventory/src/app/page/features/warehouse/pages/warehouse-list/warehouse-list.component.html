@@ -38,6 +38,15 @@
         <td>{{ warehouse.location }}</td>
         <td>{{ warehouse.capacity }}</td>
         <td>
+          <p-button
+            label="View Items"
+            icon="pi pi-list"
+            [outlined]="true"
+            severity="info"
+            (click)="viewWarehouseItems(warehouse)">
+          </p-button>
+        </td>
+        <td>
           <p-button label="Info" (click)="showDialogInfo(warehouse)"></p-button>
         </td>
         <td>

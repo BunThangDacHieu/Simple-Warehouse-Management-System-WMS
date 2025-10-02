@@ -17,6 +17,7 @@ import {
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-warehouse-list',
@@ -47,6 +48,7 @@ export class WarehouseListComponent implements OnInit {
   dialogUpdateVisible = false;
 
   constructor(
+    private router: Router,
     private warehouseService: WarehouseService,
     private messageService: MessageService,
     private fb: FormBuilder
@@ -89,8 +91,8 @@ export class WarehouseListComponent implements OnInit {
     this.dialogUpdateVisible = true;
   }
 
-  onChangeDialogUpdate() {
-    this.dialogUpdateVisible = !this.dialogUpdateVisible;
+  viewWarehouseItems(warehouse: Warehouse) {
+    this.router.navigate(['/warehouse', warehouse.id]);
   }
 
   handleWarehouseCreated(newWarehouse: Warehouse): void {
