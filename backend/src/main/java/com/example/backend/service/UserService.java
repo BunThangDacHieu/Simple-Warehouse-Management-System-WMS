@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
 
     //Lưu người dùng với mật khẩu được mã hóa
     public User saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword())); //
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
     /*-------------------------------------------Password Reset ----------------------------------------*/

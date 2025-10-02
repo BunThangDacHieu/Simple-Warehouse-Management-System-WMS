@@ -14,7 +14,6 @@
     <p-table [value]="users" [tableStyle]="{ 'min-width': '50rem', 'padding-left': '10px' }">
       <ng-template pTemplate="header">
         <tr>
-          <th>ID</th>
           <th>Name</th>
           <th>Email</th>
           <th>Contract</th>
@@ -27,7 +26,6 @@
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
-          <td>{{ user.id }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.contract_person }}</td>

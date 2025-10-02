@@ -5,11 +5,12 @@ import {ItemService} from '../../services/item.service';
 import {MessageService} from 'primeng/api';
 import {Item} from '../../../../../shared/model/item';
 import {Button} from 'primeng/button';
-import {Dialog} from 'primeng/dialog';
 import {Toast} from 'primeng/toast';
+import {CardModule} from 'primeng/card';
+import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-item-list',
-  imports: [TableModule, Button, Dialog, Toast],
+  imports: [TableModule, Button, Toast, CardModule , CommonModule],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
 })
@@ -31,7 +32,9 @@ export class ItemListComponent implements OnInit{
       unit: ['', [Validators.required]],
     })
   }
-  ngOnInit(){}
+  ngOnInit(){
+    this.GetAllItems()
+  }
 
   GetAllItems(): void{
     this.itemService.getAllItem().subscribe({

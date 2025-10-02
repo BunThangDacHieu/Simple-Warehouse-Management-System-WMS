@@ -24,7 +24,6 @@
   <p-table [value]="warehouses" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Location</th>
         <th>Capacity</th>
@@ -35,7 +34,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-warehouse>
       <tr>
-        <td>{{ warehouse.id }}</td>
         <td>{{ warehouse.name }}</td>
         <td>{{ warehouse.location }}</td>
         <td>{{ warehouse.capacity }}</td>

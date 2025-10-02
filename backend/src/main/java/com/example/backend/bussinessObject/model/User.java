@@ -40,18 +40,13 @@ public class User {
     }
     @Size(min = 10, max = 20, message = "Tên của người liên hệ cần ít nhất 10 chữ cái, và đầy đủ họ và tên")
     private String contract_person;
-    @NotNull
     @Pattern(regexp = "^0[0-9]{9}$", message="Cần bắt đầu bằng số 0")
     private String phone;
-    @NotBlank(message = "Không được làm trống địa chỉ")
     @Pattern(
             regexp = "^(?=.*\\p{L})[\\p{L}0-9 ,.-]+$",
             message = "Địa chỉ phải chính xác"
     )
     private String address;
-    @OneToOne(mappedBy = "user")
-    @JsonIgnore
-    private Customer customer;
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 

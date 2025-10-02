@@ -46,9 +46,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errorResponse = new HashMap<>();
-        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
-            errorResponse.put(violation.getPropertyPath().toString(), violation.getMessage());
-        }
+        ex.getConstraintViolations().forEach(cv -> {
+            String field = cv.getPropertyPath().toString();
+            String message = cv.getMessage();
+            errorResponse.put(field, message);
+        });
         return ResponseEntity.badRequest().body(errorResponse);
     }
 }

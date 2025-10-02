@@ -49,58 +49,101 @@ export class SignupComponent {
     private messageService: MessageService
   ) {
     this.registerForm = this.fb.group({
+      role: ['CUSTOMER', Validators.required],
       name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$')]],
-      address: ['', [Validators.required, Validators.pattern('^[\\p{L}0-9 ,.\\-]+$')]],
-      phone: ['', [Validators.pattern('^0[0-9]{9}$')]],
-      role: [null, [Validators.required]],
+      address: [''],
+      phone: [''],
+      contractPerson: [''],
     });
   }
 
-  fieldLabels: {[key: string]: string} = {
-    Name: 'Tên',
-    Email: ' Email',
-    Password: 'Mật Khẩu',
-    Phone: ' Số điện thoại',
-    Address: 'Địa Chỉ',
-    Role: 'Vai trò'
-  }
-
   register() {
-    this.authService.register(this.registerForm.value).subscribe(
-      (response) => {
+    const role = this.registerForm.get('role')?.value;
+    console.log(role);
+
+    // Reset validators cho address và phone trước
+    this.registerForm.get('address')?.clearValidators();
+    this.registerForm.get('phone')?.clearValidators();
+
+    // Nếu là SUPPLIER thì thêm validators
+    if (role === 'SUPPLIER') {
+      this.registerForm.get('address')?.setValidators([
+        Validators.required,
+        Validators.pattern('^[\\p{L}0-9 ,.\\-]+$')
+      ]);
+      this.registerForm.get('phone')?.setValidators([
+        Validators.required,
+        Validators.pattern('^0[0-9]{9}$')
+      ]);
+      this.registerForm.get('contractPerson')?.setValidators([
+        Validators.required,
+        Validators.pattern('^[\\p{L}0-9 ,.\\-]+$')
+      ]);
+
+      // Cập nhật trạng thái validation
+      this.registerForm.get('address')?.updateValueAndValidity();
+      this.registerForm.get('phone')?.updateValueAndValidity();
+    } else {
+      // Nếu là CUSTOMER, cập nhật để xóa errors cũ
+      this.registerForm.get('address')?.updateValueAndValidity();
+      this.registerForm.get('phone')?.updateValueAndValidity();
+    }
+
+    // Kiểm tra form hợp lệ
+    // if (this.registerForm.invalid) {
+    //   this.messageService.add({
+    //     severity: 'warn',
+    //     summary: 'Cảnh báo',
+    //     detail: 'Vui lòng điền đầy đủ thông tin hợp lệ.'
+    //   });
+    //   return;
+    // }
+
+    // Tạo request object
+    let request: any = {
+      name: this.registerForm.get('name')?.value,
+      email: this.registerForm.get('email')?.value,
+      password: this.registerForm.get('password')?.value,
+      role: role
+    }
+
+    // Chỉ thêm address và phone nếu là SUPPLIER
+    if (role === 'SUPPLIER') {
+      request.address = this.registerForm.get('address')?.value;
+      request.phone = this.registerForm.get('phone')?.value;
+    }
+
+    this.authService.register(request).subscribe({
+      next: (res) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Thành công',
-          detail: 'Đăng ký tài khoản thành công'
+          detail: 'Đăng ký thành công! Vui lòng đăng nhập.',
         });
         this.router.navigate(['/login']);
       },
-      (error) => {
-        const errors = error.error;
-        console.log(errors);
-        if (errors && typeof errors === 'object') {
-          Object.keys(errors).forEach(key => {
-            const label = this.fieldLabels[key] || key;
-            const messages = Array.isArray(errors[key])
-              ? errors[key].join(', ')
-              : errors[key];
-            this.messageService.add({
-              severity: 'error',
-              summary: label,
-              detail: messages
-            });
-          });
+      error: (err) => {
+        if (err.error && typeof err.error === 'object') {
+          for (const field in err.error) {
+            if (err.error.hasOwnProperty(field)) {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Lỗi',
+                detail: `${field}: ${err.error[field]}`
+              });
+            }
+          }
         } else {
           this.messageService.add({
             severity: 'error',
             summary: 'Lỗi',
-            detail: error.message || 'Unknown Error'
+            detail: err.error?.message || 'Đăng ký thất bại. Vui lòng thử lại.'
           });
         }
       }
-    );
+    });
   }
 
 }

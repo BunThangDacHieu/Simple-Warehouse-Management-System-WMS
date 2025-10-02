@@ -3,6 +3,10 @@ package com.example.backend.controller;
 import java.util.*;
 
 import com.example.backend.bussinessObject.dto.*;
+import com.example.backend.bussinessObject.model.Customer;
+import com.example.backend.bussinessObject.model.Supplier;
+import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.SupplierRepository;
 import com.example.backend.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.*;
@@ -27,6 +31,8 @@ public class AuthController {
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final CustomerRepository customerRepository;
+    private final SupplierRepository supplierRepository;
     private final String SiteURL = "http://localhost:4200";
 
     public AuthController(
@@ -34,23 +40,57 @@ public class AuthController {
             JwtUtil jwtUtil,
             AuthenticationManager authenticationManager,
             UserRepository userRepository,
-            MailService mailService
+            MailService mailService,
+            CustomerRepository customerRepository,
+            SupplierRepository supplierRepository
     ) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.mailService = mailService;
+        this.customerRepository = customerRepository;
+        this.supplierRepository = supplierRepository;
     }
     /*----------------Bộ ba đăng nhập đăng ký, và làm mới token----------------------*/
     //Đăng ký tài khoản
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody User user) {
+    public ResponseEntity<?> register(@Valid @RequestBody Map<String, Object> requestData) {
         try {
-            if (userService.findUserbyEmail(user) != null) {
-                return ResponseEntity.badRequest().body("User already exists");
+            String role = (String) requestData.get("role");
+
+            if(role == null) {
+                return ResponseEntity.badRequest().body("Role is required");
             }
-            return ResponseEntity.ok(userService.saveUser(user));
+            String email = (String) requestData.get("email");
+            User existingUser = userRepository.findByEmail(email);
+            if(existingUser != null) {
+                Map<String, String> errorResponse = new HashMap<>();
+                errorResponse.put("message", "Email đã tồn tại");
+                return ResponseEntity.badRequest().body(errorResponse);
+            }
+            User savedUser;
+            if("CUSTOMER".equals(role)){
+                Customer customer = new Customer();
+                customer.setName((String) requestData.get("name"));
+                customer.setEmail((String) requestData.get("email"));
+                customer.setPassword((String) requestData.get("password"));
+                customer.setRole(User.Role.CUSTOMER);
+                savedUser = userService.saveUser(customer);
+            } else if("SUPPLIER".equals(role)){
+                Supplier supplier = new Supplier();
+                supplier.setName((String) requestData.get("name"));
+                supplier.setEmail((String) requestData.get("email"));
+                supplier.setPassword((String) requestData.get("password"));
+                supplier.setAddress((String) requestData.get("address"));
+                supplier.setPhone((String) requestData.get("phone"));
+                supplier.setContract_person((String) requestData.get("contract_person"));
+                supplier.setRole(User.Role.SUPPLIER);
+                savedUser = userService.saveUser(supplier);
+            } else{
+                return ResponseEntity.badRequest().body("Invalid role");
+            }
+            return ResponseEntity.ok(savedUser);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
